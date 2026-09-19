@@ -13,10 +13,10 @@ export default function ModalScreen() {
       >
         <View style={styles.header}>
           <View style={styles.headerText}>
-            <Text style={styles.eyebrow}>🥜 PISTACHIO SPEAKING LAB</Text>
+            <Text style={styles.eyebrow}>YOUR SPEAKING LAB</Text>
             <Text style={styles.title}>Good morning.</Text>
             <Text style={styles.subtitle}>
-              Your next great pitch starts with one rep.
+              Build confidence, one rep at a time.
             </Text>
           </View>
 
@@ -28,8 +28,9 @@ export default function ModalScreen() {
         <View style={styles.heroCard}>
           <View style={styles.heroTop}>
             <View style={styles.heroBadge}>
-              <Text style={styles.heroBadgeText}>🥜 TODAY'S FOCUS</Text>
+              <Text style={styles.heroBadgeText}>TODAY'S FOCUS</Text>
             </View>
+
             <Text style={styles.heroScore}>68%</Text>
           </View>
 
@@ -48,19 +49,16 @@ export default function ModalScreen() {
 
         <View style={styles.statsRow}>
           <View style={styles.statCard}>
-            <Text style={styles.statEmoji}>🔥</Text>
             <Text style={styles.statNumber}>7</Text>
             <Text style={styles.statLabel}>DAY STREAK</Text>
           </View>
 
           <View style={styles.statCard}>
-            <Text style={styles.statEmoji}>🥜</Text>
             <Text style={styles.statNumber}>12</Text>
             <Text style={styles.statLabel}>REPS DONE</Text>
           </View>
 
           <View style={styles.statCard}>
-            <Text style={styles.statEmoji}>↗</Text>
             <Text style={styles.statNumber}>+18%</Text>
             <Text style={styles.statLabel}>THIS WEEK</Text>
           </View>
@@ -82,7 +80,7 @@ export default function ModalScreen() {
 
           <View style={styles.progressFooter}>
             <Text style={styles.progressSmall}>6 reps remaining</Text>
-            <Text style={styles.progressSmall}>Keep going 🥜</Text>
+            <Text style={styles.progressSmall}>Keep going</Text>
           </View>
         </View>
 
@@ -100,12 +98,15 @@ export default function ModalScreen() {
         <View style={styles.practiceGrid}>
           <Pressable style={styles.practiceCard}>
             <View style={styles.practiceIcon}>
-              <Text style={styles.practiceEmoji}>🎙️</Text>
+              <Text style={styles.practiceSymbol}>●</Text>
             </View>
+
             <Text style={styles.cardTitle}>Record</Text>
+
             <Text style={styles.cardDescription}>
               Practice your delivery and get comfortable on camera.
             </Text>
+
             <View style={styles.cardBottom}>
               <Text style={styles.cardAction}>OPEN</Text>
               <Text style={styles.cardArrow}>→</Text>
@@ -114,12 +115,15 @@ export default function ModalScreen() {
 
           <Pressable style={styles.practiceCard}>
             <View style={styles.practiceIcon}>
-              <Text style={styles.practiceEmoji}>📖</Text>
+              <Text style={styles.practiceSymbol}>▤</Text>
             </View>
+
             <Text style={styles.cardTitle}>Read</Text>
+
             <Text style={styles.cardDescription}>
               Train your expression with short speaking prompts.
             </Text>
+
             <View style={styles.cardBottom}>
               <Text style={styles.cardAction}>OPEN</Text>
               <Text style={styles.cardArrow}>→</Text>
@@ -128,12 +132,15 @@ export default function ModalScreen() {
 
           <Pressable style={styles.practiceCard}>
             <View style={styles.practiceIcon}>
-              <Text style={styles.practiceEmoji}>🎧</Text>
+              <Text style={styles.practiceSymbol}>◖</Text>
             </View>
+
             <Text style={styles.cardTitle}>Listen</Text>
+
             <Text style={styles.cardDescription}>
               Study techniques used by confident speakers.
             </Text>
+
             <View style={styles.cardBottom}>
               <Text style={styles.cardAction}>OPEN</Text>
               <Text style={styles.cardArrow}>→</Text>
@@ -142,12 +149,15 @@ export default function ModalScreen() {
 
           <Pressable style={styles.practiceCard}>
             <View style={styles.practiceIcon}>
-              <Text style={styles.practiceEmoji}>👀</Text>
+              <Text style={styles.practiceSymbol}>◉</Text>
             </View>
+
             <Text style={styles.cardTitle}>Presence</Text>
+
             <Text style={styles.cardDescription}>
               Improve eye contact, posture, and audience connection.
             </Text>
+
             <View style={styles.cardBottom}>
               <Text style={styles.cardAction}>OPEN</Text>
               <Text style={styles.cardArrow}>→</Text>
@@ -156,18 +166,21 @@ export default function ModalScreen() {
         </View>
 
         <View style={styles.challengeCard}>
-          <View style={styles.challengeLeft}>
-            <Text style={styles.challengeEmoji}>🥜</Text>
+          <View style={styles.challengeContent}>
             <Text style={styles.challengeLabel}>DAILY CHALLENGE</Text>
+
             <Text style={styles.challengeTitle}>
               Tell a story in 60 seconds.
             </Text>
+
             <Text style={styles.challengeDescription}>
               Hook your audience, build tension, and land your point.
             </Text>
 
             <Pressable style={styles.challengeButton}>
-              <Text style={styles.challengeButtonText}>ACCEPT CHALLENGE</Text>
+              <Text style={styles.challengeButtonText}>
+                ACCEPT CHALLENGE
+              </Text>
               <Text style={styles.challengeButtonArrow}>→</Text>
             </Pressable>
           </View>
@@ -187,7 +200,7 @@ export default function ModalScreen() {
         <View style={styles.skillList}>
           <Pressable style={styles.skillRow}>
             <View style={styles.skillIcon}>
-              <Text style={styles.skillEmoji}>🎙️</Text>
+              <Text style={styles.skillSymbol}>◒</Text>
             </View>
 
             <View style={styles.skillInfo}>
@@ -204,7 +217,7 @@ export default function ModalScreen() {
 
           <Pressable style={styles.skillRow}>
             <View style={styles.skillIcon}>
-              <Text style={styles.skillEmoji}>🧍</Text>
+              <Text style={styles.skillSymbol}>◇</Text>
             </View>
 
             <View style={styles.skillInfo}>
@@ -221,7 +234,7 @@ export default function ModalScreen() {
 
           <Pressable style={styles.skillRow}>
             <View style={styles.skillIcon}>
-              <Text style={styles.skillEmoji}>🤝</Text>
+              <Text style={styles.skillSymbol}>◎</Text>
             </View>
 
             <View style={styles.skillInfo}>
@@ -238,7 +251,7 @@ export default function ModalScreen() {
 
           <Pressable style={styles.skillRow}>
             <View style={styles.skillIcon}>
-              <Text style={styles.skillEmoji}>💡</Text>
+              <Text style={styles.skillSymbol}>✦</Text>
             </View>
 
             <View style={styles.skillInfo}>
@@ -273,9 +286,11 @@ export default function ModalScreen() {
           <Pressable style={styles.frameworkCard}>
             <View style={styles.frameworkTop}>
               <Text style={styles.frameworkNumber}>01</Text>
-              <Text style={styles.frameworkEmoji}>🧠</Text>
+              <Text style={styles.frameworkSymbol}>+</Text>
             </View>
+
             <Text style={styles.frameworkTitle}>PREP</Text>
+
             <Text style={styles.frameworkDescription}>
               Structure any idea before you speak.
             </Text>
@@ -284,9 +299,11 @@ export default function ModalScreen() {
           <Pressable style={styles.frameworkCard}>
             <View style={styles.frameworkTop}>
               <Text style={styles.frameworkNumber}>02</Text>
-              <Text style={styles.frameworkEmoji}>📖</Text>
+              <Text style={styles.frameworkSymbol}>+</Text>
             </View>
+
             <Text style={styles.frameworkTitle}>STAR</Text>
+
             <Text style={styles.frameworkDescription}>
               Turn experiences into compelling stories.
             </Text>
@@ -295,9 +312,11 @@ export default function ModalScreen() {
           <Pressable style={styles.frameworkCard}>
             <View style={styles.frameworkTop}>
               <Text style={styles.frameworkNumber}>03</Text>
-              <Text style={styles.frameworkEmoji}>🎯</Text>
+              <Text style={styles.frameworkSymbol}>+</Text>
             </View>
+
             <Text style={styles.frameworkTitle}>PEEL</Text>
+
             <Text style={styles.frameworkDescription}>
               Make your arguments clear and memorable.
             </Text>
@@ -306,9 +325,11 @@ export default function ModalScreen() {
           <Pressable style={styles.frameworkCard}>
             <View style={styles.frameworkTop}>
               <Text style={styles.frameworkNumber}>04</Text>
-              <Text style={styles.frameworkEmoji}>🥜</Text>
+              <Text style={styles.frameworkSymbol}>+</Text>
             </View>
+
             <Text style={styles.frameworkTitle}>HOOK</Text>
+
             <Text style={styles.frameworkDescription}>
               Grab attention before your main point.
             </Text>
@@ -316,13 +337,15 @@ export default function ModalScreen() {
         </ScrollView>
 
         <View style={styles.footerCard}>
-          <Text style={styles.footerEmoji}>🥜</Text>
+          <View style={styles.footerLine} />
+
           <View style={styles.footerContent}>
-            <Text style={styles.footerTitle}>Keep cracking.</Text>
+            <Text style={styles.footerTitle}>Your speaking journey</Text>
             <Text style={styles.footerText}>
-              Every rep makes the next one easier.
+              Keep practicing. Your confidence is built rep by rep.
             </Text>
           </View>
+
           <Text style={styles.footerArrow}>→</Text>
         </View>
 
@@ -335,7 +358,7 @@ export default function ModalScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F5F5F0',
+    backgroundColor: '#F7F7F5',
   },
 
   content: {
@@ -347,7 +370,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'flex-start',
     justifyContent: 'space-between',
-    marginBottom: 24,
+    marginBottom: 25,
   },
 
   headerText: {
@@ -357,8 +380,8 @@ const styles = StyleSheet.create({
   eyebrow: {
     fontSize: 10,
     fontWeight: '900',
-    letterSpacing: 1.5,
-    color: '#747A65',
+    letterSpacing: 1.6,
+    color: '#777',
     marginBottom: 8,
   },
 
@@ -398,7 +421,6 @@ const styles = StyleSheet.create({
     minHeight: 285,
     marginBottom: 12,
     overflow: 'hidden',
-    borderRadius: 4,
   },
 
   heroTop: {
@@ -478,21 +500,17 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFF',
     borderWidth: 1,
     borderColor: '#E4E4DF',
-    padding: 13,
-    minHeight: 105,
+    padding: 14,
+    minHeight: 100,
     marginRight: 8,
   },
 
-  statEmoji: {
-    fontSize: 16,
-    marginBottom: 7,
-  },
-
   statNumber: {
-    fontSize: 20,
+    fontSize: 22,
     fontWeight: '900',
     color: '#111',
-    marginBottom: 2,
+    marginTop: 8,
+    marginBottom: 4,
   },
 
   statLabel: {
@@ -503,11 +521,11 @@ const styles = StyleSheet.create({
   },
 
   progressCard: {
-    backgroundColor: '#E8E9DF',
+    backgroundColor: '#E8E8E3',
     padding: 18,
     marginBottom: 32,
     borderWidth: 1,
-    borderColor: '#DCDDCE',
+    borderColor: '#DDDDD7',
   },
 
   progressHeader: {
@@ -520,7 +538,7 @@ const styles = StyleSheet.create({
     fontSize: 9,
     fontWeight: '900',
     letterSpacing: 1.3,
-    color: '#747A65',
+    color: '#777',
     marginBottom: 5,
   },
 
@@ -538,7 +556,7 @@ const styles = StyleSheet.create({
 
   progressBar: {
     height: 8,
-    backgroundColor: '#D0D1C5',
+    backgroundColor: '#D0D0CA',
     marginTop: 16,
     overflow: 'hidden',
   },
@@ -579,7 +597,7 @@ const styles = StyleSheet.create({
     fontSize: 9,
     fontWeight: '900',
     letterSpacing: 1.4,
-    color: '#858978',
+    color: '#858585',
     marginBottom: 3,
   },
 
@@ -623,14 +641,15 @@ const styles = StyleSheet.create({
   practiceIcon: {
     width: 43,
     height: 43,
-    backgroundColor: '#EEF0E7',
+    backgroundColor: '#F0F0EC',
     alignItems: 'center',
     justifyContent: 'center',
     marginBottom: 15,
   },
 
-  practiceEmoji: {
-    fontSize: 19,
+  practiceSymbol: {
+    fontSize: 20,
+    color: '#111',
   },
 
   cardTitle: {
@@ -682,13 +701,8 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
   },
 
-  challengeLeft: {
+  challengeContent: {
     flex: 1,
-  },
-
-  challengeEmoji: {
-    fontSize: 23,
-    marginBottom: 15,
   },
 
   challengeLabel: {
@@ -696,12 +710,12 @@ const styles = StyleSheet.create({
     fontWeight: '900',
     letterSpacing: 1.5,
     color: '#D7FF4F',
-    marginBottom: 9,
+    marginBottom: 10,
   },
 
   challengeTitle: {
-    fontSize: 26,
-    lineHeight: 30,
+    fontSize: 27,
+    lineHeight: 31,
     fontWeight: '900',
     letterSpacing: -0.7,
     color: '#FFF',
@@ -742,7 +756,7 @@ const styles = StyleSheet.create({
 
   challengeNumber: {
     position: 'absolute',
-    right: -10,
+    right: -8,
     bottom: -25,
   },
 
@@ -755,7 +769,7 @@ const styles = StyleSheet.create({
   skillList: {
     marginBottom: 32,
     borderTopWidth: 1,
-    borderTopColor: '#DFDFDA',
+    borderTopColor: '#E2E2DE',
   },
 
   skillRow: {
@@ -763,20 +777,21 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     borderBottomWidth: 1,
-    borderBottomColor: '#DFDFDA',
+    borderBottomColor: '#E2E2DE',
   },
 
   skillIcon: {
     width: 45,
     height: 45,
-    backgroundColor: '#E9EAE1',
+    backgroundColor: '#EBEBE7',
     alignItems: 'center',
     justifyContent: 'center',
     marginRight: 13,
   },
 
-  skillEmoji: {
-    fontSize: 19,
+  skillSymbol: {
+    fontSize: 21,
+    color: '#111',
   },
 
   skillInfo: {
@@ -838,8 +853,10 @@ const styles = StyleSheet.create({
     letterSpacing: 1,
   },
 
-  frameworkEmoji: {
-    fontSize: 18,
+  frameworkSymbol: {
+    fontSize: 20,
+    fontWeight: '300',
+    color: '#999',
   },
 
   frameworkTitle: {
@@ -858,18 +875,20 @@ const styles = StyleSheet.create({
   },
 
   footerCard: {
-    backgroundColor: '#E8E9DF',
-    minHeight: 85,
-    padding: 16,
+    backgroundColor: '#E8E8E3',
+    minHeight: 88,
+    padding: 17,
     flexDirection: 'row',
     alignItems: 'center',
     borderWidth: 1,
-    borderColor: '#DCDDCE',
+    borderColor: '#DDDDD7',
   },
 
-  footerEmoji: {
-    fontSize: 25,
-    marginRight: 13,
+  footerLine: {
+    width: 4,
+    height: 48,
+    backgroundColor: '#111',
+    marginRight: 14,
   },
 
   footerContent: {
@@ -885,6 +904,7 @@ const styles = StyleSheet.create({
 
   footerText: {
     fontSize: 11,
+    lineHeight: 16,
     color: '#777',
   },
 
