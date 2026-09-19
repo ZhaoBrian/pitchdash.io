@@ -28,7 +28,7 @@ export default function ModalScreen() {
         <View style={styles.heroHeader}>
           <View>
             <Text style={styles.eyebrow}>WELCOME BACK</Text>
-            <Text style={styles.title}>MODAL</Text>
+            <Text style={styles.title}>PitchDashboard</Text>
             <Text style={styles.subtitle}>
               Speak clearly. Think quickly. Be remembered.
             </Text>
@@ -281,7 +281,7 @@ export default function ModalScreen() {
         </View>
 
         <View style={styles.footer}>
-          <Text style={styles.footerBrand}>MODAL</Text>
+          <Text style={styles.footerBrand}>PitchDash.io</Text>
           <Text style={styles.footerText}>
             PRACTICE UNTIL SPEAKING FEELS NATURAL.
           </Text>

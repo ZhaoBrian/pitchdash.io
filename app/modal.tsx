@@ -17,7 +17,7 @@ export default function ModalScreen() {
           <View style={styles.brandTop}>
             <View style={styles.brandMark}>
               <View style={styles.brandMarkInner}>
-                <Text style={styles.brandMarkText}>◖⬮◗</Text>
+                <Text style={styles.brandMarkText}>PDi</Text>
               </View>
             </View>
 
@@ -29,7 +29,7 @@ export default function ModalScreen() {
           </View>
 
           <View style={styles.brandMain}>
-            <Text style={styles.brandTitle}>PitchDashboard</Text>
+            <Text style={styles.brandTitle}>PitchDash.io</Text>
             <Text style={styles.brandSubtitle}>
               Speak clearly. Pitch boldly. Be remembered.
             </Text>
