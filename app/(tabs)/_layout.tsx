@@ -1,5 +1,5 @@
 import { Tabs } from 'expo-router';
-import { Image } from 'react-native';
+import { View, Text } from 'react-native';
 
 export default function TabLayout() {
   return (
@@ -28,15 +28,26 @@ export default function TabLayout() {
         options={{
           title: 'Home',
           tabBarIcon: ({ focused }) => (
-            <Image
-              source={require('../../assets/idk.png')}
+            <View
               style={{
-                width: 26,
-                height: 26,
-                opacity: focused ? 1 : 0.45,
+                width: 28,
+                height: 28,
+                alignItems: 'center',
+                justifyContent: 'center',
+                backgroundColor: focused ? '#D7FF4F' : '#EEEEEA',
+                borderRadius: 8,
               }}
-              resizeMode="contain"
-            />
+            >
+              <Text
+                style={{
+                  color: '#111111',
+                  fontSize: 14,
+                  fontWeight: '900',
+                }}
+              >
+                M
+              </Text>
+            </View>
           ),
         }}
       />
@@ -46,15 +57,26 @@ export default function TabLayout() {
         options={{
           title: 'Practice',
           tabBarIcon: ({ focused }) => (
-            <Image
-              source={require('../../assets/idk.png')}
+            <View
               style={{
-                width: 26,
-                height: 26,
-                opacity: focused ? 1 : 0.45,
+                width: 28,
+                height: 28,
+                alignItems: 'center',
+                justifyContent: 'center',
+                backgroundColor: focused ? '#D7FF4F' : '#EEEEEA',
+                borderRadius: 8,
               }}
-              resizeMode="contain"
-            />
+            >
+              <Text
+                style={{
+                  color: '#111111',
+                  fontSize: 14,
+                  fontWeight: '900',
+                }}
+              >
+                M
+              </Text>
+            </View>
           ),
         }}
       />
