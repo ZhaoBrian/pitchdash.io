@@ -13,7 +13,7 @@ export default function ProgressScreen() {
       >
         <View style={styles.header}>
           <View>
-            <Text style={styles.eyebrow}>MODAL / PROGRESS</Text>
+            <Text style={styles.eyebrow}>PitchDash.io / PROGRESS</Text>
             <Text style={styles.title}>Progress</Text>
             <Text style={styles.subtitle}>
               See how your speaking is improving.

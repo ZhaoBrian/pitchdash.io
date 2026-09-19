@@ -119,10 +119,10 @@ export default function PrompterScreen() {
       >
         <View style={styles.header}>
           <View>
-            <Text style={styles.eyebrow}>MODAL / TOOL</Text>
+            <Text style={styles.eyebrow}>PitchDash.io / TOOL</Text>
             <Text style={styles.title}>Screen Prompter</Text>
             <Text style={styles.subtitle}>
-              Speak naturally while MODAL keeps your pace.
+              Speak naturally while PDi keeps your pace.
             </Text>
           </View>
 
@@ -311,7 +311,7 @@ export default function PrompterScreen() {
           <View style={styles.infoContent}>
             <Text style={styles.infoTitle}>How timing works</Text>
             <Text style={styles.infoText}>
-              MODAL estimates each section using your word count and selected
+              PDi estimates each section using your word count and selected
               speaking speed. When the timer reaches zero, the next section
               automatically appears.
             </Text>

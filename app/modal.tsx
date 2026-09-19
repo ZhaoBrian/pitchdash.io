@@ -29,7 +29,7 @@ export default function ModalScreen() {
           </View>
 
           <View style={styles.brandMain}>
-            <Text style={styles.brandTitle}>MODAL</Text>
+            <Text style={styles.brandTitle}>PitchDashboard</Text>
             <Text style={styles.brandSubtitle}>
               Speak clearly. Pitch boldly. Be remembered.
             </Text>
