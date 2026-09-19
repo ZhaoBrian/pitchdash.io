@@ -56,53 +56,53 @@ export default function ModalScreen() {
         <View style={styles.practiceGrid}>
           <Pressable style={styles.practiceCard}>
             <View style={styles.iconBox}>
-              <Text style={styles.icon}>🔥</Text>
+              <Text style={styles.icon}>●</Text>
             </View>
             <Text style={styles.cardTitle}>Record</Text>
             <Text style={styles.cardDescription}>
               Practice your delivery
             </Text>
             <View style={styles.cardArrow}>
-              <Text style={styles.icon}>🔥</Text>
+              <Text style={styles.arrow}>→</Text>
             </View>
           </Pressable>
 
           <Pressable style={styles.practiceCard}>
             <View style={styles.iconBox}>
-              <Text style={styles.icon}>🔥</Text>
+              <Text style={styles.icon}>▤</Text>
             </View>
             <Text style={styles.cardTitle}>Read</Text>
             <Text style={styles.cardDescription}>
               Train your expression
             </Text>
             <View style={styles.cardArrow}>
-              <Text style={styles.icon}>🔥</Text>
+              <Text style={styles.arrow}>→</Text>
             </View>
           </Pressable>
 
           <Pressable style={styles.practiceCard}>
             <View style={styles.iconBox}>
-              <Text style={styles.icon}>🔥</Text>
+              <Text style={styles.icon}>◖</Text>
             </View>
             <Text style={styles.cardTitle}>Listen</Text>
             <Text style={styles.cardDescription}>
               Study great speakers
             </Text>
             <View style={styles.cardArrow}>
-              <Text style={styles.icon}>🔥</Text>
+              <Text style={styles.arrow}>→</Text>
             </View>
           </Pressable>
 
           <Pressable style={styles.practiceCard}>
             <View style={styles.iconBox}>
-              <Text style={styles.icon}>🔥</Text>
+              <Text style={styles.icon}>◉</Text>
             </View>
             <Text style={styles.cardTitle}>Eye Contact</Text>
             <Text style={styles.cardDescription}>
               Improve your presence
             </Text>
             <View style={styles.cardArrow}>
-              <Text style={styles.icon}>🔥</Text>
+              <Text style={styles.arrow}>→</Text>
             </View>
           </Pressable>
         </View>
@@ -121,7 +121,7 @@ export default function ModalScreen() {
 
             <Pressable style={styles.startButton}>
               <Text style={styles.startButtonText}>START PRACTICE</Text>
-              <Text style={styles.icon}>🔥</Text>
+              <Text style={styles.startArrow}>→</Text>
             </Pressable>
           </View>
         </View>
@@ -133,7 +133,7 @@ export default function ModalScreen() {
         <View style={styles.skillList}>
           <Pressable style={styles.skillRow}>
             <View style={styles.skillIcon}>
-              <Text style={styles.icon}>🔥</Text>
+              <Text style={styles.skillSymbol}>◒</Text>
             </View>
 
             <View style={styles.skillInfo}>
@@ -143,12 +143,12 @@ export default function ModalScreen() {
               </Text>
             </View>
 
-            <Text style={styles.icon}>🔥</Text>
+            <Text style={styles.chevron}>›</Text>
           </Pressable>
 
           <Pressable style={styles.skillRow}>
             <View style={styles.skillIcon}>
-              <Text style={styles.icon}>🔥</Text>
+              <Text style={styles.skillSymbol}>◇</Text>
             </View>
 
             <View style={styles.skillInfo}>
@@ -158,12 +158,12 @@ export default function ModalScreen() {
               </Text>
             </View>
 
-            <Text style={styles.icon}>🔥</Text>
+            <Text style={styles.chevron}>›</Text>
           </Pressable>
 
           <Pressable style={styles.skillRow}>
             <View style={styles.skillIcon}>
-              <Text style={styles.icon}>🔥</Text>
+              <Text style={styles.skillSymbol}>◎</Text>
             </View>
 
             <View style={styles.skillInfo}>
@@ -173,7 +173,7 @@ export default function ModalScreen() {
               </Text>
             </View>
 
-            <Text style={styles.icon}>🔥</Text>
+            <Text style={styles.chevron}>›</Text>
           </Pressable>
         </View>
 
@@ -304,8 +304,13 @@ const styles = StyleSheet.create({
   streak: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 6,
     marginTop: 5,
+  },
+
+  icon: {
+    fontSize: 18,
+    color: '#111',
+    marginRight: 6,
   },
 
   streakText: {
@@ -362,7 +367,6 @@ const styles = StyleSheet.create({
   practiceGrid: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    gap: 10,
     marginBottom: 30,
   },
 
@@ -374,6 +378,8 @@ const styles = StyleSheet.create({
     borderColor: '#E5E5E1',
     padding: 16,
     position: 'relative',
+    marginRight: '3%',
+    marginBottom: 10,
   },
 
   iconBox: {
@@ -403,6 +409,12 @@ const styles = StyleSheet.create({
     position: 'absolute',
     right: 13,
     bottom: 13,
+  },
+
+  arrow: {
+    fontSize: 18,
+    fontWeight: '600',
+    color: '#111',
   },
 
   featureCard: {
@@ -456,13 +468,19 @@ const styles = StyleSheet.create({
     marginTop: 18,
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 10,
   },
 
   startButtonText: {
     fontSize: 10,
     fontWeight: '900',
     letterSpacing: 1,
+    color: '#111',
+    marginRight: 10,
+  },
+
+  startArrow: {
+    fontSize: 17,
+    fontWeight: '700',
     color: '#111',
   },
 
@@ -478,7 +496,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderBottomWidth: 1,
     borderBottomColor: '#E2E2DE',
-    gap: 13,
   },
 
   skillIcon: {
@@ -487,6 +504,12 @@ const styles = StyleSheet.create({
     backgroundColor: '#EBEBE7',
     alignItems: 'center',
     justifyContent: 'center',
+    marginRight: 13,
+  },
+
+  skillSymbol: {
+    fontSize: 22,
+    color: '#111',
   },
 
   skillInfo: {
@@ -505,8 +528,13 @@ const styles = StyleSheet.create({
     color: '#888',
   },
 
+  chevron: {
+    fontSize: 25,
+    color: '#999',
+    marginLeft: 10,
+  },
+
   frameworkScroll: {
-    gap: 10,
     paddingRight: 20,
   },
 
@@ -517,6 +545,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#E2E2DE',
     padding: 17,
+    marginRight: 10,
   },
 
   frameworkNumber: {
