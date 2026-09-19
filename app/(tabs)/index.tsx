@@ -2,215 +2,290 @@ import { StatusBar } from 'expo-status-bar';
 import { Platform, StyleSheet, ScrollView, Pressable } from 'react-native';
 import { Text, View } from '@/components/Themed';
 
-export default function HomeScreen() {
+export default function ModalScreen() {
   return (
     <View style={styles.container}>
-      <StatusBar style="dark" />
+      <StatusBar style="light" />
 
       <ScrollView
         showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.content}
       >
-        <View style={styles.header}>
+        <View style={styles.brandBar}>
+          <View style={styles.brandLeft}>
+            <View style={styles.brandMark}>
+              <Text style={styles.brandMarkText}>M</Text>
+            </View>
+
+            <Text style={styles.brandLabel}>PUBLIC SPEAKING PLATFORM</Text>
+          </View>
+
+          <View style={styles.profile}>
+            <Text style={styles.profileText}>B</Text>
+          </View>
+        </View>
+
+        <View style={styles.heroHeader}>
           <View>
-            <Text style={styles.eyebrow}>YOUR SPEAKING LAB</Text>
-            <Text style={styles.title}>Good morning.</Text>
+            <Text style={styles.eyebrow}>WELCOME BACK</Text>
+            <Text style={styles.title}>MODAL</Text>
             <Text style={styles.subtitle}>
-              Build confidence, one rep at a time.
+              Speak clearly. Think quickly. Be remembered.
             </Text>
           </View>
 
-          <Pressable style={styles.profile}>
-            <Text style={styles.profileText}>B</Text>
+          <View style={styles.scoreBox}>
+            <Text style={styles.scoreNumber}>68</Text>
+            <Text style={styles.scoreLabel}>SCORE</Text>
+          </View>
+        </View>
+
+        <View style={styles.limeLine} />
+
+        <View style={styles.heroCard}>
+          <View style={styles.heroTop}>
+            <Text style={styles.heroEyebrow}>TODAY'S FOCUS</Text>
+            <Text style={styles.heroNumber}>01</Text>
+          </View>
+
+          <Text style={styles.heroTitle}>Become harder to ignore.</Text>
+
+          <Text style={styles.heroText}>
+            Strong speakers do not just know what to say. They know how to
+            make people listen.
+          </Text>
+
+          <Pressable style={styles.heroButton}>
+            <Text style={styles.heroButtonText}>START TODAY'S SESSION</Text>
+            <Text style={styles.heroArrow}>→</Text>
           </Pressable>
         </View>
 
-        <View style={styles.progressCard}>
-          <View style={styles.progressTop}>
-            <View>
-              <Text style={styles.progressLabel}>WEEKLY PROGRESS</Text>
-              <Text style={styles.progressNumber}>68%</Text>
-            </View>
-
-            <View style={styles.streak}>
-              <Text style={styles.icon}>🔥</Text>
-              <Text style={styles.streakText}>7 day streak</Text>
-            </View>
+        <View style={styles.statsRow}>
+          <View style={styles.statCard}>
+            <Text style={styles.statNumber}>7</Text>
+            <Text style={styles.statLabel}>DAY STREAK</Text>
           </View>
 
-          <View style={styles.progressBar}>
-            <View style={styles.progressFill} />
+          <View style={styles.statCard}>
+            <Text style={styles.statNumber}>12</Text>
+            <Text style={styles.statLabel}>REPS DONE</Text>
           </View>
 
-          <View style={styles.progressBottom}>
-            <Text style={styles.progressSmall}>12 of 18 sessions</Text>
-            <Text style={styles.progressSmall}>+3 this week</Text>
+          <View style={styles.statCard}>
+            <Text style={styles.statNumber}>+18%</Text>
+            <Text style={styles.statLabel}>THIS WEEK</Text>
           </View>
         </View>
 
         <View style={styles.sectionHeader}>
-          <Text style={styles.sectionTitle}>Practice</Text>
-          <Text style={styles.sectionAction}>VIEW ALL</Text>
+          <View>
+            <Text style={styles.sectionEyebrow}>WEEKLY MISSION</Text>
+            <Text style={styles.sectionTitle}>Build your speaking reps.</Text>
+          </View>
+
+          <Text style={styles.sectionMeta}>12 / 18</Text>
+        </View>
+
+        <View style={styles.missionCard}>
+          <View style={styles.missionTop}>
+            <Text style={styles.missionText}>
+              Complete 18 speaking exercises this week.
+            </Text>
+
+            <Text style={styles.missionPercent}>68%</Text>
+          </View>
+
+          <View style={styles.progressTrack}>
+            <View style={styles.progressFill} />
+          </View>
+
+          <Text style={styles.missionBottom}>
+            6 more reps to complete the mission
+          </Text>
+        </View>
+
+        <View style={styles.sectionHeader}>
+          <View>
+            <Text style={styles.sectionEyebrow}>PRACTICE ROOM</Text>
+            <Text style={styles.sectionTitle}>Choose your rep.</Text>
+          </View>
         </View>
 
         <View style={styles.practiceGrid}>
           <Pressable style={styles.practiceCard}>
-            <View style={styles.iconBox}>
-              <Text style={styles.icon}>●</Text>
-            </View>
-            <Text style={styles.cardTitle}>Record</Text>
-            <Text style={styles.cardDescription}>
-              Practice your delivery
+            <Text style={styles.practiceNumber}>01</Text>
+            <Text style={styles.practiceTitle}>RECORD</Text>
+            <Text style={styles.practiceDescription}>
+              Practice a response and review your delivery.
             </Text>
-            <View style={styles.cardArrow}>
-              <Text style={styles.arrow}>→</Text>
-            </View>
+            <Text style={styles.practiceArrow}>→</Text>
           </Pressable>
 
           <Pressable style={styles.practiceCard}>
-            <View style={styles.iconBox}>
-              <Text style={styles.icon}>▤</Text>
-            </View>
-            <Text style={styles.cardTitle}>Read</Text>
-            <Text style={styles.cardDescription}>
-              Train your expression
+            <Text style={styles.practiceNumber}>02</Text>
+            <Text style={styles.practiceTitle}>READ</Text>
+            <Text style={styles.practiceDescription}>
+              Work through a prepared speaking prompt.
             </Text>
-            <View style={styles.cardArrow}>
-              <Text style={styles.arrow}>→</Text>
-            </View>
+            <Text style={styles.practiceArrow}>→</Text>
           </Pressable>
 
           <Pressable style={styles.practiceCard}>
-            <View style={styles.iconBox}>
-              <Text style={styles.icon}>◖</Text>
-            </View>
-            <Text style={styles.cardTitle}>Listen</Text>
-            <Text style={styles.cardDescription}>
-              Study great speakers
+            <Text style={styles.practiceNumber}>03</Text>
+            <Text style={styles.practiceTitle}>LISTEN</Text>
+            <Text style={styles.practiceDescription}>
+              Hear examples and identify what makes them effective.
             </Text>
-            <View style={styles.cardArrow}>
-              <Text style={styles.arrow}>→</Text>
-            </View>
+            <Text style={styles.practiceArrow}>→</Text>
           </Pressable>
 
           <Pressable style={styles.practiceCard}>
-            <View style={styles.iconBox}>
-              <Text style={styles.icon}>◉</Text>
-            </View>
-            <Text style={styles.cardTitle}>Eye Contact</Text>
-            <Text style={styles.cardDescription}>
-              Improve your presence
+            <Text style={styles.practiceNumber}>04</Text>
+            <Text style={styles.practiceTitle}>PRESENCE</Text>
+            <Text style={styles.practiceDescription}>
+              Train your posture, eye contact, and physical delivery.
             </Text>
-            <View style={styles.cardArrow}>
-              <Text style={styles.arrow}>→</Text>
-            </View>
+            <Text style={styles.practiceArrow}>→</Text>
           </Pressable>
         </View>
 
-        <View style={styles.featureCard}>
-          <View style={styles.featureAccent} />
+        <View style={styles.challengeCard}>
+          <View style={styles.challengeHeader}>
+            <Text style={styles.challengeEyebrow}>DAILY CHALLENGE</Text>
+            <Text style={styles.challengeTime}>2 MIN</Text>
+          </View>
 
-          <View style={styles.featureContent}>
-            <Text style={styles.featureEyebrow}>TODAY'S CHALLENGE</Text>
-            <Text style={styles.featureTitle}>
-              Tell a story in 60 seconds.
-            </Text>
-            <Text style={styles.featureDescription}>
-              Hook your audience, build tension, and land your point.
-            </Text>
+          <Text style={styles.challengeTitle}>
+            Explain something complicated in the simplest way possible.
+          </Text>
 
-            <Pressable style={styles.startButton}>
-              <Text style={styles.startButtonText}>START PRACTICE</Text>
-              <Text style={styles.startArrow}>→</Text>
-            </Pressable>
+          <Text style={styles.challengeDescription}>
+            Pick any topic. You have 60 seconds to explain it to someone who
+            knows nothing about it.
+          </Text>
+
+          <Pressable style={styles.challengeButton}>
+            <Text style={styles.challengeButtonText}>TAKE THE CHALLENGE</Text>
+          </Pressable>
+        </View>
+
+        <View style={styles.sectionHeader}>
+          <View>
+            <Text style={styles.sectionEyebrow}>SKILLS</Text>
+            <Text style={styles.sectionTitle}>Your speaking toolkit.</Text>
           </View>
         </View>
 
-        <View style={styles.sectionHeader}>
-          <Text style={styles.sectionTitle}>Build your skills</Text>
+        <View style={styles.skillCard}>
+          <View style={styles.skillInfo}>
+            <Text style={styles.skillTitle}>Voice & Delivery</Text>
+            <Text style={styles.skillDescription}>
+              Pace, volume, tone, pauses
+            </Text>
+          </View>
+
+          <View style={styles.skillProgress}>
+            <Text style={styles.skillPercent}>72%</Text>
+            <View style={styles.smallTrack}>
+              <View style={[styles.smallFill, { width: '72%' }]} />
+            </View>
+          </View>
         </View>
 
-        <View style={styles.skillList}>
-          <Pressable style={styles.skillRow}>
-            <View style={styles.skillIcon}>
-              <Text style={styles.skillSymbol}>◒</Text>
-            </View>
+        <View style={styles.skillCard}>
+          <View style={styles.skillInfo}>
+            <Text style={styles.skillTitle}>Body Language</Text>
+            <Text style={styles.skillDescription}>
+              Posture, gestures, eye contact
+            </Text>
+          </View>
 
-            <View style={styles.skillInfo}>
-              <Text style={styles.skillTitle}>Voice & Delivery</Text>
-              <Text style={styles.skillDescription}>
-                Pace, volume, tone and emphasis
+          <View style={styles.skillProgress}>
+            <Text style={styles.skillPercent}>61%</Text>
+            <View style={styles.smallTrack}>
+              <View style={[styles.smallFill, { width: '61%' }]} />
+            </View>
+          </View>
+        </View>
+
+        <View style={styles.skillCard}>
+          <View style={styles.skillInfo}>
+            <Text style={styles.skillTitle}>Audience Connection</Text>
+            <Text style={styles.skillDescription}>
+              Clarity, empathy, engagement
+            </Text>
+          </View>
+
+          <View style={styles.skillProgress}>
+            <Text style={styles.skillPercent}>54%</Text>
+            <View style={styles.smallTrack}>
+              <View style={[styles.smallFill, { width: '54%' }]} />
+            </View>
+          </View>
+        </View>
+
+        <View style={styles.skillCard}>
+          <View style={styles.skillInfo}>
+            <Text style={styles.skillTitle}>Pitching & Ideas</Text>
+            <Text style={styles.skillDescription}>
+              Structure, persuasion, storytelling
+            </Text>
+          </View>
+
+          <View style={styles.skillProgress}>
+            <Text style={styles.skillPercent}>48%</Text>
+            <View style={styles.smallTrack}>
+              <View style={[styles.smallFill, { width: '48%' }]} />
+            </View>
+          </View>
+        </View>
+
+        <View style={styles.frameworkSection}>
+          <View style={styles.sectionHeader}>
+            <View>
+              <Text style={styles.sectionEyebrow}>FRAMEWORKS</Text>
+              <Text style={styles.sectionTitle}>Know your structure.</Text>
+            </View>
+          </View>
+
+          <View style={styles.frameworkGrid}>
+            <View style={styles.frameworkCard}>
+              <Text style={styles.frameworkName}>PREP</Text>
+              <Text style={styles.frameworkDescription}>
+                Point · Reason · Example · Point
               </Text>
             </View>
 
-            <Text style={styles.chevron}>›</Text>
-          </Pressable>
-
-          <Pressable style={styles.skillRow}>
-            <View style={styles.skillIcon}>
-              <Text style={styles.skillSymbol}>◇</Text>
-            </View>
-
-            <View style={styles.skillInfo}>
-              <Text style={styles.skillTitle}>Body Language</Text>
-              <Text style={styles.skillDescription}>
-                Posture, gestures and presence
+            <View style={styles.frameworkCard}>
+              <Text style={styles.frameworkName}>STAR</Text>
+              <Text style={styles.frameworkDescription}>
+                Situation · Task · Action · Result
               </Text>
             </View>
 
-            <Text style={styles.chevron}>›</Text>
-          </Pressable>
-
-          <Pressable style={styles.skillRow}>
-            <View style={styles.skillIcon}>
-              <Text style={styles.skillSymbol}>◎</Text>
-            </View>
-
-            <View style={styles.skillInfo}>
-              <Text style={styles.skillTitle}>Audience Connection</Text>
-              <Text style={styles.skillDescription}>
-                Engagement, clarity and confidence
+            <View style={styles.frameworkCard}>
+              <Text style={styles.frameworkName}>PEEL</Text>
+              <Text style={styles.frameworkDescription}>
+                Point · Evidence · Explain · Link
               </Text>
             </View>
 
-            <Text style={styles.chevron}>›</Text>
-          </Pressable>
+            <View style={styles.frameworkCard}>
+              <Text style={styles.frameworkName}>HOOK</Text>
+              <Text style={styles.frameworkDescription}>
+                Grab attention before giving context
+              </Text>
+            </View>
+          </View>
         </View>
 
-        <View style={styles.sectionHeader}>
-          <Text style={styles.sectionTitle}>Speaking frameworks</Text>
-          <Text style={styles.sectionAction}>EXPLORE</Text>
+        <View style={styles.footer}>
+          <Text style={styles.footerBrand}>MODAL</Text>
+          <Text style={styles.footerText}>
+            PRACTICE UNTIL SPEAKING FEELS NATURAL.
+          </Text>
         </View>
-
-        <ScrollView
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          contentContainerStyle={styles.frameworkScroll}
-        >
-          <Pressable style={styles.frameworkCard}>
-            <Text style={styles.frameworkNumber}>01</Text>
-            <Text style={styles.frameworkTitle}>PREP</Text>
-            <Text style={styles.frameworkDescription}>
-              Structure any idea before you speak.
-            </Text>
-          </Pressable>
-
-          <Pressable style={styles.frameworkCard}>
-            <Text style={styles.frameworkNumber}>02</Text>
-            <Text style={styles.frameworkTitle}>STAR</Text>
-            <Text style={styles.frameworkDescription}>
-              Turn experiences into compelling stories.
-            </Text>
-          </Pressable>
-
-          <Pressable style={styles.frameworkCard}>
-            <Text style={styles.frameworkNumber}>03</Text>
-            <Text style={styles.frameworkTitle}>PEEL</Text>
-            <Text style={styles.frameworkDescription}>
-              Make your arguments clear and memorable.
-            </Text>
-          </Pressable>
-        </ScrollView>
 
         <View style={styles.bottomSpace} />
       </ScrollView>
@@ -225,291 +300,400 @@ const styles = StyleSheet.create({
   },
 
   content: {
-    paddingTop: Platform.OS === 'ios' ? 64 : 42,
+    paddingTop: Platform.OS === 'ios' ? 25 : 18,
     paddingHorizontal: 20,
+    maxWidth: 1100,
+    width: '100%',
+    alignSelf: 'center',
   },
 
-  header: {
+  brandBar: {
+    backgroundColor: '#111',
+    minHeight: 64,
+    paddingHorizontal: 18,
     flexDirection: 'row',
-    alignItems: 'flex-start',
+    alignItems: 'center',
     justifyContent: 'space-between',
-    marginBottom: 28,
+    marginBottom: 30,
   },
 
-  eyebrow: {
-    fontSize: 11,
-    fontWeight: '700',
-    letterSpacing: 1.6,
-    color: '#777',
-    marginBottom: 7,
+  brandLeft: {
+    flexDirection: 'row',
+    alignItems: 'center',
   },
 
-  title: {
-    fontSize: 32,
-    fontWeight: '800',
-    letterSpacing: -1,
+  brandMark: {
+    width: 36,
+    height: 36,
+    backgroundColor: '#D7FF4F',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginRight: 12,
+  },
+
+  brandMarkText: {
     color: '#111',
+    fontSize: 17,
+    fontWeight: '900',
   },
 
-  subtitle: {
-    fontSize: 14,
-    color: '#777',
-    marginTop: 5,
+  brandLabel: {
+    color: '#FFF',
+    fontSize: 9,
+    fontWeight: '900',
+    letterSpacing: 1.4,
   },
 
   profile: {
-    width: 44,
-    height: 44,
-    borderRadius: 22,
-    backgroundColor: '#111',
+    width: 34,
+    height: 34,
+    borderRadius: 17,
+    backgroundColor: '#292929',
     alignItems: 'center',
     justifyContent: 'center',
   },
 
   profileText: {
-    color: '#fff',
-    fontSize: 16,
-    fontWeight: '700',
+    color: '#FFF',
+    fontSize: 12,
+    fontWeight: '900',
   },
 
-  progressCard: {
-    backgroundColor: '#E8E8E3',
-    padding: 20,
-    marginBottom: 32,
-    borderWidth: 1,
-    borderColor: '#DDDDD7',
-  },
-
-  progressTop: {
+  heroHeader: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    alignItems: 'flex-start',
+    alignItems: 'flex-end',
   },
 
-  progressLabel: {
-    fontSize: 10,
-    fontWeight: '800',
-    letterSpacing: 1.4,
-    color: '#777',
-    marginBottom: 4,
+  eyebrow: {
+    fontSize: 9,
+    fontWeight: '900',
+    letterSpacing: 1.7,
+    color: '#888',
+    marginBottom: 5,
   },
 
-  progressNumber: {
-    fontSize: 34,
-    fontWeight: '800',
+  title: {
+    fontSize: 42,
+    fontWeight: '900',
+    letterSpacing: -2,
     color: '#111',
-    letterSpacing: -1,
   },
 
-  streak: {
+  subtitle: {
+    fontSize: 13,
+    color: '#777',
+    marginTop: 3,
+  },
+
+  scoreBox: {
+    width: 76,
+    height: 76,
+    backgroundColor: '#111',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+
+  scoreNumber: {
+    color: '#D7FF4F',
+    fontSize: 29,
+    fontWeight: '900',
+  },
+
+  scoreLabel: {
+    color: '#777',
+    fontSize: 7,
+    fontWeight: '900',
+    letterSpacing: 1.2,
+  },
+
+  limeLine: {
+    height: 3,
+    backgroundColor: '#D7FF4F',
+    marginTop: 20,
+    marginBottom: 14,
+  },
+
+  heroCard: {
+    backgroundColor: '#111',
+    padding: 24,
+    minHeight: 260,
+    justifyContent: 'space-between',
+    marginBottom: 12,
+  },
+
+  heroTop: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+
+  heroEyebrow: {
+    color: '#D7FF4F',
+    fontSize: 9,
+    fontWeight: '900',
+    letterSpacing: 1.5,
+  },
+
+  heroNumber: {
+    color: '#555',
+    fontSize: 12,
+    fontWeight: '900',
+  },
+
+  heroTitle: {
+    color: '#FFF',
+    fontSize: Platform.OS === 'web' ? 38 : 31,
+    fontWeight: '900',
+    letterSpacing: -1.3,
+    marginTop: 40,
+  },
+
+  heroText: {
+    color: '#999',
+    fontSize: 13,
+    lineHeight: 20,
+    maxWidth: 650,
+    marginTop: 12,
+  },
+
+  heroButton: {
+    backgroundColor: '#D7FF4F',
+    minHeight: 48,
+    paddingHorizontal: 18,
     flexDirection: 'row',
     alignItems: 'center',
-    marginTop: 5,
-  },
-
-  icon: {
-    fontSize: 18,
-    color: '#111',
-    marginRight: 6,
-  },
-
-  streakText: {
-    fontSize: 12,
-    fontWeight: '700',
-    color: '#111',
-  },
-
-  progressBar: {
-    height: 7,
-    backgroundColor: '#D0D0CA',
-    marginTop: 17,
-    overflow: 'hidden',
-  },
-
-  progressFill: {
-    width: '68%',
-    height: '100%',
-    backgroundColor: '#111',
-  },
-
-  progressBottom: {
-    flexDirection: 'row',
     justifyContent: 'space-between',
-    marginTop: 9,
+    marginTop: 24,
   },
 
-  progressSmall: {
-    fontSize: 11,
-    color: '#777',
+  heroButtonText: {
+    color: '#111',
+    fontSize: 9,
+    fontWeight: '900',
+    letterSpacing: 1,
+  },
+
+  heroArrow: {
+    color: '#111',
+    fontSize: 19,
+    fontWeight: '900',
+  },
+
+  statsRow: {
+    flexDirection: 'row',
+    marginBottom: 28,
+  },
+
+  statCard: {
+    flex: 1,
+    backgroundColor: '#FFF',
+    borderWidth: 1,
+    borderColor: '#E2E2DE',
+    padding: 17,
+    marginRight: 8,
+  },
+
+  statNumber: {
+    color: '#111',
+    fontSize: 25,
+    fontWeight: '900',
+  },
+
+  statLabel: {
+    color: '#888',
+    fontSize: 7,
+    fontWeight: '900',
+    letterSpacing: 1.1,
+    marginTop: 4,
   },
 
   sectionHeader: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    alignItems: 'center',
-    marginBottom: 14,
+    alignItems: 'flex-end',
+    marginBottom: 12,
+  },
+
+  sectionEyebrow: {
+    fontSize: 8,
+    fontWeight: '900',
+    letterSpacing: 1.5,
+    color: '#999',
+    marginBottom: 4,
   },
 
   sectionTitle: {
-    fontSize: 21,
-    fontWeight: '800',
-    letterSpacing: -0.5,
+    fontSize: 19,
+    fontWeight: '900',
     color: '#111',
   },
 
-  sectionAction: {
-    fontSize: 10,
-    fontWeight: '800',
-    letterSpacing: 1,
-    color: '#777',
+  sectionMeta: {
+    fontSize: 13,
+    fontWeight: '900',
+    color: '#111',
+  },
+
+  missionCard: {
+    backgroundColor: '#E8E8E3',
+    borderWidth: 1,
+    borderColor: '#DADAD4',
+    padding: 18,
+    marginBottom: 30,
+  },
+
+  missionTop: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+
+  missionText: {
+    flex: 1,
+    fontSize: 12,
+    color: '#555',
+  },
+
+  missionPercent: {
+    fontSize: 20,
+    fontWeight: '900',
+    color: '#111',
+    marginLeft: 12,
+  },
+
+  progressTrack: {
+    height: 8,
+    backgroundColor: '#D0D0CA',
+    marginTop: 16,
+  },
+
+  progressFill: {
+    height: '100%',
+    width: '68%',
+    backgroundColor: '#111',
+  },
+
+  missionBottom: {
+    fontSize: 9,
+    color: '#888',
+    marginTop: 9,
   },
 
   practiceGrid: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    marginBottom: 30,
+    marginRight: -8,
+    marginBottom: 28,
   },
 
   practiceCard: {
-    width: '48.5%',
-    minHeight: 155,
+    width: Platform.OS === 'web' ? '25%' : '50%',
+    minHeight: 190,
     backgroundColor: '#FFF',
     borderWidth: 1,
-    borderColor: '#E5E5E1',
-    padding: 16,
-    position: 'relative',
-    marginRight: '3%',
-    marginBottom: 10,
+    borderColor: '#E2E2DE',
+    padding: 18,
+    marginBottom: 8,
+    paddingRight: 16,
   },
 
-  iconBox: {
-    width: 40,
-    height: 40,
-    backgroundColor: '#F0F0EC',
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginBottom: 17,
-  },
-
-  cardTitle: {
-    fontSize: 17,
-    fontWeight: '800',
-    color: '#111',
-    marginBottom: 5,
-  },
-
-  cardDescription: {
-    fontSize: 12,
-    lineHeight: 17,
-    color: '#858585',
-    paddingRight: 5,
-  },
-
-  cardArrow: {
-    position: 'absolute',
-    right: 13,
-    bottom: 13,
-  },
-
-  arrow: {
-    fontSize: 18,
-    fontWeight: '600',
-    color: '#111',
-  },
-
-  featureCard: {
-    backgroundColor: '#111',
-    minHeight: 235,
-    marginBottom: 34,
-    flexDirection: 'row',
-    overflow: 'hidden',
-  },
-
-  featureAccent: {
-    width: 6,
-    backgroundColor: '#D7FF4F',
-  },
-
-  featureContent: {
-    flex: 1,
-    padding: 22,
-  },
-
-  featureEyebrow: {
-    fontSize: 10,
-    fontWeight: '800',
-    letterSpacing: 1.5,
-    color: '#AFAFAF',
-    marginBottom: 10,
-  },
-
-  featureTitle: {
-    fontSize: 25,
-    lineHeight: 29,
-    fontWeight: '800',
-    letterSpacing: -0.7,
-    color: '#FFF',
-    maxWidth: 290,
-  },
-
-  featureDescription: {
-    fontSize: 13,
-    lineHeight: 19,
-    color: '#AFAFAF',
-    marginTop: 10,
-    maxWidth: 290,
-  },
-
-  startButton: {
-    alignSelf: 'flex-start',
-    backgroundColor: '#D7FF4F',
-    paddingVertical: 12,
-    paddingHorizontal: 15,
-    marginTop: 18,
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-
-  startButtonText: {
-    fontSize: 10,
+  practiceNumber: {
+    fontSize: 8,
     fontWeight: '900',
     letterSpacing: 1,
-    color: '#111',
-    marginRight: 10,
+    color: '#AAA',
   },
 
-  startArrow: {
+  practiceTitle: {
     fontSize: 17,
-    fontWeight: '700',
+    fontWeight: '900',
     color: '#111',
+    marginTop: 30,
   },
 
-  skillList: {
-    marginBottom: 32,
-    borderTopWidth: 1,
-    borderTopColor: '#E2E2DE',
+  practiceDescription: {
+    fontSize: 10,
+    lineHeight: 15,
+    color: '#888',
+    marginTop: 7,
   },
 
-  skillRow: {
-    minHeight: 76,
+  practiceArrow: {
+    fontSize: 17,
+    fontWeight: '900',
+    color: '#111',
+    marginTop: 20,
+  },
+
+  challengeCard: {
+    backgroundColor: '#D7FF4F',
+    padding: 22,
+    marginBottom: 30,
+  },
+
+  challengeHeader: {
     flexDirection: 'row',
-    alignItems: 'center',
-    borderBottomWidth: 1,
-    borderBottomColor: '#E2E2DE',
+    justifyContent: 'space-between',
   },
 
-  skillIcon: {
-    width: 43,
-    height: 43,
-    backgroundColor: '#EBEBE7',
+  challengeEyebrow: {
+    color: '#111',
+    fontSize: 9,
+    fontWeight: '900',
+    letterSpacing: 1.4,
+  },
+
+  challengeTime: {
+    color: '#111',
+    fontSize: 9,
+    fontWeight: '900',
+    letterSpacing: 1,
+  },
+
+  challengeTitle: {
+    color: '#111',
+    fontSize: 25,
+    lineHeight: 31,
+    fontWeight: '900',
+    letterSpacing: -0.6,
+    maxWidth: 720,
+    marginTop: 28,
+  },
+
+  challengeDescription: {
+    color: '#444',
+    fontSize: 12,
+    lineHeight: 18,
+    maxWidth: 650,
+    marginTop: 10,
+  },
+
+  challengeButton: {
+    backgroundColor: '#111',
+    minHeight: 46,
+    paddingHorizontal: 17,
     alignItems: 'center',
     justifyContent: 'center',
-    marginRight: 13,
+    marginTop: 20,
+    alignSelf: 'flex-start',
   },
 
-  skillSymbol: {
-    fontSize: 22,
-    color: '#111',
+  challengeButtonText: {
+    color: '#D7FF4F',
+    fontSize: 9,
+    fontWeight: '900',
+    letterSpacing: 1,
+  },
+
+  skillCard: {
+    backgroundColor: '#FFF',
+    borderWidth: 1,
+    borderColor: '#E2E2DE',
+    padding: 17,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginBottom: 8,
   },
 
   skillInfo: {
@@ -517,60 +701,95 @@ const styles = StyleSheet.create({
   },
 
   skillTitle: {
-    fontSize: 15,
-    fontWeight: '800',
+    fontSize: 14,
+    fontWeight: '900',
     color: '#111',
-    marginBottom: 3,
   },
 
   skillDescription: {
-    fontSize: 12,
-    color: '#888',
-  },
-
-  chevron: {
-    fontSize: 25,
+    fontSize: 10,
     color: '#999',
-    marginLeft: 10,
+    marginTop: 4,
   },
 
-  frameworkScroll: {
-    paddingRight: 20,
+  skillProgress: {
+    width: 150,
+    marginLeft: 20,
+  },
+
+  skillPercent: {
+    fontSize: 9,
+    fontWeight: '900',
+    color: '#111',
+    textAlign: 'right',
+    marginBottom: 5,
+  },
+
+  smallTrack: {
+    height: 5,
+    backgroundColor: '#E4E4DF',
+  },
+
+  smallFill: {
+    height: '100%',
+    backgroundColor: '#111',
+  },
+
+  frameworkSection: {
+    marginTop: 25,
+  },
+
+  frameworkGrid: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    marginRight: -8,
   },
 
   frameworkCard: {
-    width: 205,
-    height: 145,
-    backgroundColor: '#FFF',
-    borderWidth: 1,
-    borderColor: '#E2E2DE',
-    padding: 17,
-    marginRight: 10,
+    width: Platform.OS === 'web' ? '25%' : '50%',
+    backgroundColor: '#111',
+    padding: 18,
+    minHeight: 120,
+    marginBottom: 8,
   },
 
-  frameworkNumber: {
-    fontSize: 10,
-    fontWeight: '800',
-    color: '#999',
-    letterSpacing: 1,
-    marginBottom: 15,
-  },
-
-  frameworkTitle: {
-    fontSize: 19,
+  frameworkName: {
+    color: '#D7FF4F',
+    fontSize: 18,
     fontWeight: '900',
-    color: '#111',
-    letterSpacing: 1,
-    marginBottom: 7,
   },
 
   frameworkDescription: {
-    fontSize: 12,
-    lineHeight: 17,
-    color: '#777',
+    color: '#888',
+    fontSize: 9,
+    lineHeight: 14,
+    marginTop: 10,
+  },
+
+  footer: {
+    borderTopWidth: 1,
+    borderTopColor: '#DDD',
+    marginTop: 35,
+    paddingTop: 20,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+
+  footerBrand: {
+    color: '#111',
+    fontSize: 13,
+    fontWeight: '900',
+    letterSpacing: 1,
+  },
+
+  footerText: {
+    color: '#999',
+    fontSize: 7,
+    fontWeight: '900',
+    letterSpacing: 1,
   },
 
   bottomSpace: {
-    height: 50,
+    height: 60,
   },
 });
