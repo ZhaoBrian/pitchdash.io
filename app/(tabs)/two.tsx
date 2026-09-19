@@ -225,7 +225,7 @@ export default function PracticeScreen() {
           />
 
           <Text style={styles.recordText}>
-            {recording ? 'STOP RECORDING' : 'START RECORDING'}
+            {recording ? 'STOP RECORDING' : 'START RAPPORTING'}
           </Text>
         </Pressable>
       </View>
