@@ -26,7 +26,7 @@ export default function TabLayout() {
       <Tabs.Screen
         name="index"
         options={{
-          title: 'Home',
+          title: 'Hone Home',
           tabBarIcon: ({ focused }) => (
             <View
               style={{
@@ -45,7 +45,7 @@ export default function TabLayout() {
                   fontWeight: '900',
                 }}
               >
-                M
+                𖠿
               </Text>
             </View>
           ),
@@ -55,7 +55,7 @@ export default function TabLayout() {
       <Tabs.Screen
         name="two"
         options={{
-          title: 'Practice',
+          title: 'Practice Makes Performative',
           tabBarIcon: ({ focused }) => (
             <View
               style={{
@@ -74,7 +74,36 @@ export default function TabLayout() {
                   fontWeight: '900',
                 }}
               >
-                M
+                ◉
+              </Text>
+            </View>
+          ),
+        }}
+      />
+
+      <Tabs.Screen
+        name="prompter"
+        options={{
+          title: 'Telecommunications\' Teleprompter',
+          tabBarIcon: ({ focused }) => (
+            <View
+              style={{
+                width: 27,
+                height: 27,
+                alignItems: 'center',
+                justifyContent: 'center',
+                backgroundColor: focused ? '#D7FF4F' : '#EEEEEE',
+                borderRadius: 8,
+              }}
+            >
+              <Text
+                style={{
+                  color: '#111111',
+                  fontSize: 15,
+                  fontWeight: '900',
+                }}
+              >
+                🖥️
               </Text>
             </View>
           ),
