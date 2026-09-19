@@ -1,7 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import { Platform, StyleSheet, ScrollView, Pressable } from 'react-native';
 import { Text, View } from '@/components/Themed';
-import { Ionicons } from '@expo/vector-icons';
 
 export default function ModalScreen() {
   return (
@@ -34,7 +33,7 @@ export default function ModalScreen() {
             </View>
 
             <View style={styles.streak}>
-              <Ionicons name="flame" size={18} color="#111" />
+              <Text style={styles.icon}>🔥</Text>
               <Text style={styles.streakText}>7 day streak</Text>
             </View>
           </View>
@@ -57,53 +56,53 @@ export default function ModalScreen() {
         <View style={styles.practiceGrid}>
           <Pressable style={styles.practiceCard}>
             <View style={styles.iconBox}>
-              <Ionicons name="mic-outline" size={23} color="#111" />
+              <Text style={styles.icon}>🔥</Text>
             </View>
             <Text style={styles.cardTitle}>Record</Text>
             <Text style={styles.cardDescription}>
               Practice your delivery
             </Text>
             <View style={styles.cardArrow}>
-              <Ionicons name="arrow-forward" size={17} color="#111" />
+              <Text style={styles.icon}>🔥</Text>
             </View>
           </Pressable>
 
           <Pressable style={styles.practiceCard}>
             <View style={styles.iconBox}>
-              <Ionicons name="book-outline" size={23} color="#111" />
+              <Text style={styles.icon}>🔥</Text>
             </View>
             <Text style={styles.cardTitle}>Read</Text>
             <Text style={styles.cardDescription}>
               Train your expression
             </Text>
             <View style={styles.cardArrow}>
-              <Ionicons name="arrow-forward" size={17} color="#111" />
+              <Text style={styles.icon}>🔥</Text>
             </View>
           </Pressable>
 
           <Pressable style={styles.practiceCard}>
             <View style={styles.iconBox}>
-              <Ionicons name="headset-outline" size={23} color="#111" />
+              <Text style={styles.icon}>🔥</Text>
             </View>
             <Text style={styles.cardTitle}>Listen</Text>
             <Text style={styles.cardDescription}>
               Study great speakers
             </Text>
             <View style={styles.cardArrow}>
-              <Ionicons name="arrow-forward" size={17} color="#111" />
+              <Text style={styles.icon}>🔥</Text>
             </View>
           </Pressable>
 
           <Pressable style={styles.practiceCard}>
             <View style={styles.iconBox}>
-              <Ionicons name="eye-outline" size={23} color="#111" />
+              <Text style={styles.icon}>🔥</Text>
             </View>
             <Text style={styles.cardTitle}>Eye Contact</Text>
             <Text style={styles.cardDescription}>
               Improve your presence
             </Text>
             <View style={styles.cardArrow}>
-              <Ionicons name="arrow-forward" size={17} color="#111" />
+              <Text style={styles.icon}>🔥</Text>
             </View>
           </Pressable>
         </View>
@@ -122,7 +121,7 @@ export default function ModalScreen() {
 
             <Pressable style={styles.startButton}>
               <Text style={styles.startButtonText}>START PRACTICE</Text>
-              <Ionicons name="arrow-forward" size={17} color="#fff" />
+              <Text style={styles.icon}>🔥</Text>
             </Pressable>
           </View>
         </View>
@@ -134,7 +133,7 @@ export default function ModalScreen() {
         <View style={styles.skillList}>
           <Pressable style={styles.skillRow}>
             <View style={styles.skillIcon}>
-              <Ionicons name="volume-medium-outline" size={22} color="#111" />
+              <Text style={styles.icon}>🔥</Text>
             </View>
 
             <View style={styles.skillInfo}>
@@ -144,12 +143,12 @@ export default function ModalScreen() {
               </Text>
             </View>
 
-            <Ionicons name="chevron-forward" size={20} color="#999" />
+            <Text style={styles.icon}>🔥</Text>
           </Pressable>
 
           <Pressable style={styles.skillRow}>
             <View style={styles.skillIcon}>
-              <Ionicons name="body-outline" size={22} color="#111" />
+              <Text style={styles.icon}>🔥</Text>
             </View>
 
             <View style={styles.skillInfo}>
@@ -159,12 +158,12 @@ export default function ModalScreen() {
               </Text>
             </View>
 
-            <Ionicons name="chevron-forward" size={20} color="#999" />
+            <Text style={styles.icon}>🔥</Text>
           </Pressable>
 
           <Pressable style={styles.skillRow}>
             <View style={styles.skillIcon}>
-              <Ionicons name="people-outline" size={22} color="#111" />
+              <Text style={styles.icon}>🔥</Text>
             </View>
 
             <View style={styles.skillInfo}>
@@ -174,7 +173,7 @@ export default function ModalScreen() {
               </Text>
             </View>
 
-            <Ionicons name="chevron-forward" size={20} color="#999" />
+            <Text style={styles.icon}>🔥</Text>
           </Pressable>
         </View>
 
