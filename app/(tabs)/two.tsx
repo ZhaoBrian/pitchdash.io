@@ -116,7 +116,7 @@ export default function PracticeScreen() {
           <Text style={styles.eyebrow}>PRACTICE LAB</Text>
           <Text style={styles.title}>Camera access needed</Text>
           <Text style={styles.description}>
-            Allow camera access to practice your speaking and eye contact.
+            Allow camera access to practice your speaking and eye contact mannerisms.
           </Text>
 
           <Pressable
