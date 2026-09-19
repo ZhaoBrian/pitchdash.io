@@ -12,11 +12,11 @@ export default function ModalScreen() {
         contentContainerStyle={styles.content}
       >
         <View style={styles.header}>
-          <View>
-            <Text style={styles.eyebrow}>YOUR SPEAKING LAB</Text>
+          <View style={styles.headerText}>
+            <Text style={styles.eyebrow}>🥜 PISTACHIO SPEAKING LAB</Text>
             <Text style={styles.title}>Good morning.</Text>
             <Text style={styles.subtitle}>
-              Build confidence, one rep at a time.
+              Your next great pitch starts with one rep.
             </Text>
           </View>
 
@@ -25,115 +25,169 @@ export default function ModalScreen() {
           </Pressable>
         </View>
 
+        <View style={styles.heroCard}>
+          <View style={styles.heroTop}>
+            <View style={styles.heroBadge}>
+              <Text style={styles.heroBadgeText}>🥜 TODAY'S FOCUS</Text>
+            </View>
+            <Text style={styles.heroScore}>68%</Text>
+          </View>
+
+          <Text style={styles.heroTitle}>Become harder to ignore.</Text>
+
+          <Text style={styles.heroDescription}>
+            Practice your delivery, sharpen your message, and build confidence
+            one speaking rep at a time.
+          </Text>
+
+          <Pressable style={styles.heroButton}>
+            <Text style={styles.heroButtonText}>START A REP</Text>
+            <Text style={styles.heroButtonArrow}>→</Text>
+          </Pressable>
+        </View>
+
+        <View style={styles.statsRow}>
+          <View style={styles.statCard}>
+            <Text style={styles.statEmoji}>🔥</Text>
+            <Text style={styles.statNumber}>7</Text>
+            <Text style={styles.statLabel}>DAY STREAK</Text>
+          </View>
+
+          <View style={styles.statCard}>
+            <Text style={styles.statEmoji}>🥜</Text>
+            <Text style={styles.statNumber}>12</Text>
+            <Text style={styles.statLabel}>REPS DONE</Text>
+          </View>
+
+          <View style={styles.statCard}>
+            <Text style={styles.statEmoji}>↗</Text>
+            <Text style={styles.statNumber}>+18%</Text>
+            <Text style={styles.statLabel}>THIS WEEK</Text>
+          </View>
+        </View>
+
         <View style={styles.progressCard}>
-          <View style={styles.progressTop}>
+          <View style={styles.progressHeader}>
             <View>
-              <Text style={styles.progressLabel}>WEEKLY PROGRESS</Text>
-              <Text style={styles.progressNumber}>68%</Text>
+              <Text style={styles.progressLabel}>WEEKLY MISSION</Text>
+              <Text style={styles.progressTitle}>12 of 18 reps completed</Text>
             </View>
 
-            <View style={styles.streak}>
-              <Text style={styles.icon}>🔥</Text>
-              <Text style={styles.streakText}>7 day streak</Text>
-            </View>
+            <Text style={styles.progressPercent}>68%</Text>
           </View>
 
           <View style={styles.progressBar}>
             <View style={styles.progressFill} />
           </View>
 
-          <View style={styles.progressBottom}>
-            <Text style={styles.progressSmall}>12 of 18 sessions</Text>
-            <Text style={styles.progressSmall}>+3 this week</Text>
+          <View style={styles.progressFooter}>
+            <Text style={styles.progressSmall}>6 reps remaining</Text>
+            <Text style={styles.progressSmall}>Keep going 🥜</Text>
           </View>
         </View>
 
         <View style={styles.sectionHeader}>
-          <Text style={styles.sectionTitle}>Practice</Text>
-          <Text style={styles.sectionAction}>VIEW ALL</Text>
+          <View>
+            <Text style={styles.sectionEyebrow}>TRAIN</Text>
+            <Text style={styles.sectionTitle}>Practice room</Text>
+          </View>
+
+          <Pressable style={styles.viewButton}>
+            <Text style={styles.viewButtonText}>VIEW ALL →</Text>
+          </Pressable>
         </View>
 
         <View style={styles.practiceGrid}>
           <Pressable style={styles.practiceCard}>
-            <View style={styles.iconBox}>
-              <Text style={styles.icon}>●</Text>
+            <View style={styles.practiceIcon}>
+              <Text style={styles.practiceEmoji}>🎙️</Text>
             </View>
             <Text style={styles.cardTitle}>Record</Text>
             <Text style={styles.cardDescription}>
-              Practice your delivery
+              Practice your delivery and get comfortable on camera.
             </Text>
-            <View style={styles.cardArrow}>
-              <Text style={styles.arrow}>→</Text>
+            <View style={styles.cardBottom}>
+              <Text style={styles.cardAction}>OPEN</Text>
+              <Text style={styles.cardArrow}>→</Text>
             </View>
           </Pressable>
 
           <Pressable style={styles.practiceCard}>
-            <View style={styles.iconBox}>
-              <Text style={styles.icon}>▤</Text>
+            <View style={styles.practiceIcon}>
+              <Text style={styles.practiceEmoji}>📖</Text>
             </View>
             <Text style={styles.cardTitle}>Read</Text>
             <Text style={styles.cardDescription}>
-              Train your expression
+              Train your expression with short speaking prompts.
             </Text>
-            <View style={styles.cardArrow}>
-              <Text style={styles.arrow}>→</Text>
+            <View style={styles.cardBottom}>
+              <Text style={styles.cardAction}>OPEN</Text>
+              <Text style={styles.cardArrow}>→</Text>
             </View>
           </Pressable>
 
           <Pressable style={styles.practiceCard}>
-            <View style={styles.iconBox}>
-              <Text style={styles.icon}>◖</Text>
+            <View style={styles.practiceIcon}>
+              <Text style={styles.practiceEmoji}>🎧</Text>
             </View>
             <Text style={styles.cardTitle}>Listen</Text>
             <Text style={styles.cardDescription}>
-              Study great speakers
+              Study techniques used by confident speakers.
             </Text>
-            <View style={styles.cardArrow}>
-              <Text style={styles.arrow}>→</Text>
+            <View style={styles.cardBottom}>
+              <Text style={styles.cardAction}>OPEN</Text>
+              <Text style={styles.cardArrow}>→</Text>
             </View>
           </Pressable>
 
           <Pressable style={styles.practiceCard}>
-            <View style={styles.iconBox}>
-              <Text style={styles.icon}>◉</Text>
+            <View style={styles.practiceIcon}>
+              <Text style={styles.practiceEmoji}>👀</Text>
             </View>
-            <Text style={styles.cardTitle}>Eye Contact</Text>
+            <Text style={styles.cardTitle}>Presence</Text>
             <Text style={styles.cardDescription}>
-              Improve your presence
+              Improve eye contact, posture, and audience connection.
             </Text>
-            <View style={styles.cardArrow}>
-              <Text style={styles.arrow}>→</Text>
+            <View style={styles.cardBottom}>
+              <Text style={styles.cardAction}>OPEN</Text>
+              <Text style={styles.cardArrow}>→</Text>
             </View>
           </Pressable>
         </View>
 
-        <View style={styles.featureCard}>
-          <View style={styles.featureAccent} />
-
-          <View style={styles.featureContent}>
-            <Text style={styles.featureEyebrow}>TODAY'S CHALLENGE</Text>
-            <Text style={styles.featureTitle}>
+        <View style={styles.challengeCard}>
+          <View style={styles.challengeLeft}>
+            <Text style={styles.challengeEmoji}>🥜</Text>
+            <Text style={styles.challengeLabel}>DAILY CHALLENGE</Text>
+            <Text style={styles.challengeTitle}>
               Tell a story in 60 seconds.
             </Text>
-            <Text style={styles.featureDescription}>
+            <Text style={styles.challengeDescription}>
               Hook your audience, build tension, and land your point.
             </Text>
 
-            <Pressable style={styles.startButton}>
-              <Text style={styles.startButtonText}>START PRACTICE</Text>
-              <Text style={styles.startArrow}>→</Text>
+            <Pressable style={styles.challengeButton}>
+              <Text style={styles.challengeButtonText}>ACCEPT CHALLENGE</Text>
+              <Text style={styles.challengeButtonArrow}>→</Text>
             </Pressable>
+          </View>
+
+          <View style={styles.challengeNumber}>
+            <Text style={styles.challengeNumberText}>01</Text>
           </View>
         </View>
 
         <View style={styles.sectionHeader}>
-          <Text style={styles.sectionTitle}>Build your skills</Text>
+          <View>
+            <Text style={styles.sectionEyebrow}>LEVEL UP</Text>
+            <Text style={styles.sectionTitle}>Build your skills</Text>
+          </View>
         </View>
 
         <View style={styles.skillList}>
           <Pressable style={styles.skillRow}>
             <View style={styles.skillIcon}>
-              <Text style={styles.skillSymbol}>◒</Text>
+              <Text style={styles.skillEmoji}>🎙️</Text>
             </View>
 
             <View style={styles.skillInfo}>
@@ -143,12 +197,14 @@ export default function ModalScreen() {
               </Text>
             </View>
 
-            <Text style={styles.chevron}>›</Text>
+            <View style={styles.skillArrow}>
+              <Text style={styles.chevron}>→</Text>
+            </View>
           </Pressable>
 
           <Pressable style={styles.skillRow}>
             <View style={styles.skillIcon}>
-              <Text style={styles.skillSymbol}>◇</Text>
+              <Text style={styles.skillEmoji}>🧍</Text>
             </View>
 
             <View style={styles.skillInfo}>
@@ -158,12 +214,14 @@ export default function ModalScreen() {
               </Text>
             </View>
 
-            <Text style={styles.chevron}>›</Text>
+            <View style={styles.skillArrow}>
+              <Text style={styles.chevron}>→</Text>
+            </View>
           </Pressable>
 
           <Pressable style={styles.skillRow}>
             <View style={styles.skillIcon}>
-              <Text style={styles.skillSymbol}>◎</Text>
+              <Text style={styles.skillEmoji}>🤝</Text>
             </View>
 
             <View style={styles.skillInfo}>
@@ -173,13 +231,38 @@ export default function ModalScreen() {
               </Text>
             </View>
 
-            <Text style={styles.chevron}>›</Text>
+            <View style={styles.skillArrow}>
+              <Text style={styles.chevron}>→</Text>
+            </View>
+          </Pressable>
+
+          <Pressable style={styles.skillRow}>
+            <View style={styles.skillIcon}>
+              <Text style={styles.skillEmoji}>💡</Text>
+            </View>
+
+            <View style={styles.skillInfo}>
+              <Text style={styles.skillTitle}>Pitching & Ideas</Text>
+              <Text style={styles.skillDescription}>
+                Structure ideas people remember
+              </Text>
+            </View>
+
+            <View style={styles.skillArrow}>
+              <Text style={styles.chevron}>→</Text>
+            </View>
           </Pressable>
         </View>
 
-        <View style={styles.sectionHeader}>
-          <Text style={styles.sectionTitle}>Speaking frameworks</Text>
-          <Text style={styles.sectionAction}>EXPLORE</Text>
+        <View style={styles.frameworkHeader}>
+          <View>
+            <Text style={styles.sectionEyebrow}>YOUR TOOLKIT</Text>
+            <Text style={styles.sectionTitle}>Speaking frameworks</Text>
+          </View>
+
+          <Pressable style={styles.viewButton}>
+            <Text style={styles.viewButtonText}>EXPLORE →</Text>
+          </Pressable>
         </View>
 
         <ScrollView
@@ -188,7 +271,10 @@ export default function ModalScreen() {
           contentContainerStyle={styles.frameworkScroll}
         >
           <Pressable style={styles.frameworkCard}>
-            <Text style={styles.frameworkNumber}>01</Text>
+            <View style={styles.frameworkTop}>
+              <Text style={styles.frameworkNumber}>01</Text>
+              <Text style={styles.frameworkEmoji}>🧠</Text>
+            </View>
             <Text style={styles.frameworkTitle}>PREP</Text>
             <Text style={styles.frameworkDescription}>
               Structure any idea before you speak.
@@ -196,7 +282,10 @@ export default function ModalScreen() {
           </Pressable>
 
           <Pressable style={styles.frameworkCard}>
-            <Text style={styles.frameworkNumber}>02</Text>
+            <View style={styles.frameworkTop}>
+              <Text style={styles.frameworkNumber}>02</Text>
+              <Text style={styles.frameworkEmoji}>📖</Text>
+            </View>
             <Text style={styles.frameworkTitle}>STAR</Text>
             <Text style={styles.frameworkDescription}>
               Turn experiences into compelling stories.
@@ -204,13 +293,38 @@ export default function ModalScreen() {
           </Pressable>
 
           <Pressable style={styles.frameworkCard}>
-            <Text style={styles.frameworkNumber}>03</Text>
+            <View style={styles.frameworkTop}>
+              <Text style={styles.frameworkNumber}>03</Text>
+              <Text style={styles.frameworkEmoji}>🎯</Text>
+            </View>
             <Text style={styles.frameworkTitle}>PEEL</Text>
             <Text style={styles.frameworkDescription}>
               Make your arguments clear and memorable.
             </Text>
           </Pressable>
+
+          <Pressable style={styles.frameworkCard}>
+            <View style={styles.frameworkTop}>
+              <Text style={styles.frameworkNumber}>04</Text>
+              <Text style={styles.frameworkEmoji}>🥜</Text>
+            </View>
+            <Text style={styles.frameworkTitle}>HOOK</Text>
+            <Text style={styles.frameworkDescription}>
+              Grab attention before your main point.
+            </Text>
+          </Pressable>
         </ScrollView>
+
+        <View style={styles.footerCard}>
+          <Text style={styles.footerEmoji}>🥜</Text>
+          <View style={styles.footerContent}>
+            <Text style={styles.footerTitle}>Keep cracking.</Text>
+            <Text style={styles.footerText}>
+              Every rep makes the next one easier.
+            </Text>
+          </View>
+          <Text style={styles.footerArrow}>→</Text>
+        </View>
 
         <View style={styles.bottomSpace} />
       </ScrollView>
@@ -221,7 +335,7 @@ export default function ModalScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F7F7F5',
+    backgroundColor: '#F5F5F0',
   },
 
   content: {
@@ -233,21 +347,25 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'flex-start',
     justifyContent: 'space-between',
-    marginBottom: 28,
+    marginBottom: 24,
+  },
+
+  headerText: {
+    flex: 1,
   },
 
   eyebrow: {
-    fontSize: 11,
-    fontWeight: '700',
-    letterSpacing: 1.6,
-    color: '#777',
-    marginBottom: 7,
+    fontSize: 10,
+    fontWeight: '900',
+    letterSpacing: 1.5,
+    color: '#747A65',
+    marginBottom: 8,
   },
 
   title: {
-    fontSize: 32,
-    fontWeight: '800',
-    letterSpacing: -1,
+    fontSize: 34,
+    fontWeight: '900',
+    letterSpacing: -1.4,
     color: '#111',
   },
 
@@ -255,74 +373,173 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: '#777',
     marginTop: 5,
+    lineHeight: 20,
   },
 
   profile: {
-    width: 44,
-    height: 44,
-    borderRadius: 22,
+    width: 46,
+    height: 46,
+    borderRadius: 23,
     backgroundColor: '#111',
     alignItems: 'center',
     justifyContent: 'center',
+    marginLeft: 15,
   },
 
   profileText: {
-    color: '#fff',
+    color: '#D7FF4F',
     fontSize: 16,
-    fontWeight: '700',
+    fontWeight: '900',
+  },
+
+  heroCard: {
+    backgroundColor: '#111',
+    padding: 23,
+    minHeight: 285,
+    marginBottom: 12,
+    overflow: 'hidden',
+    borderRadius: 4,
+  },
+
+  heroTop: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+
+  heroBadge: {
+    backgroundColor: '#202020',
+    paddingVertical: 7,
+    paddingHorizontal: 10,
+  },
+
+  heroBadgeText: {
+    fontSize: 9,
+    fontWeight: '900',
+    letterSpacing: 1.2,
+    color: '#D7FF4F',
+  },
+
+  heroScore: {
+    fontSize: 15,
+    fontWeight: '900',
+    color: '#D7FF4F',
+  },
+
+  heroTitle: {
+    fontSize: 32,
+    lineHeight: 36,
+    fontWeight: '900',
+    letterSpacing: -1,
+    color: '#FFF',
+    marginTop: 34,
+    maxWidth: 320,
+  },
+
+  heroDescription: {
+    fontSize: 13,
+    lineHeight: 19,
+    color: '#A7A7A7',
+    marginTop: 11,
+    maxWidth: 330,
+  },
+
+  heroButton: {
+    alignSelf: 'flex-start',
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#D7FF4F',
+    paddingVertical: 13,
+    paddingHorizontal: 15,
+    marginTop: 22,
+  },
+
+  heroButtonText: {
+    fontSize: 10,
+    fontWeight: '900',
+    letterSpacing: 1,
+    color: '#111',
+    marginRight: 12,
+  },
+
+  heroButtonArrow: {
+    fontSize: 17,
+    fontWeight: '900',
+    color: '#111',
+  },
+
+  statsRow: {
+    flexDirection: 'row',
+    marginBottom: 12,
+  },
+
+  statCard: {
+    flex: 1,
+    backgroundColor: '#FFF',
+    borderWidth: 1,
+    borderColor: '#E4E4DF',
+    padding: 13,
+    minHeight: 105,
+    marginRight: 8,
+  },
+
+  statEmoji: {
+    fontSize: 16,
+    marginBottom: 7,
+  },
+
+  statNumber: {
+    fontSize: 20,
+    fontWeight: '900',
+    color: '#111',
+    marginBottom: 2,
+  },
+
+  statLabel: {
+    fontSize: 8,
+    fontWeight: '900',
+    letterSpacing: 0.8,
+    color: '#888',
   },
 
   progressCard: {
-    backgroundColor: '#E8E8E3',
-    padding: 20,
+    backgroundColor: '#E8E9DF',
+    padding: 18,
     marginBottom: 32,
     borderWidth: 1,
-    borderColor: '#DDDDD7',
+    borderColor: '#DCDDCE',
   },
 
-  progressTop: {
+  progressHeader: {
     flexDirection: 'row',
+    alignItems: 'flex-end',
     justifyContent: 'space-between',
-    alignItems: 'flex-start',
   },
 
   progressLabel: {
-    fontSize: 10,
-    fontWeight: '800',
-    letterSpacing: 1.4,
-    color: '#777',
-    marginBottom: 4,
+    fontSize: 9,
+    fontWeight: '900',
+    letterSpacing: 1.3,
+    color: '#747A65',
+    marginBottom: 5,
   },
 
-  progressNumber: {
-    fontSize: 34,
+  progressTitle: {
+    fontSize: 14,
     fontWeight: '800',
     color: '#111',
-    letterSpacing: -1,
   },
 
-  streak: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginTop: 5,
-  },
-
-  icon: {
-    fontSize: 18,
-    color: '#111',
-    marginRight: 6,
-  },
-
-  streakText: {
-    fontSize: 12,
-    fontWeight: '700',
+  progressPercent: {
+    fontSize: 25,
+    fontWeight: '900',
     color: '#111',
   },
 
   progressBar: {
-    height: 7,
-    backgroundColor: '#D0D0CA',
-    marginTop: 17,
+    height: 8,
+    backgroundColor: '#D0D1C5',
+    marginTop: 16,
     overflow: 'hidden',
   },
 
@@ -332,35 +549,56 @@ const styles = StyleSheet.create({
     backgroundColor: '#111',
   },
 
-  progressBottom: {
+  progressFooter: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     marginTop: 9,
   },
 
   progressSmall: {
-    fontSize: 11,
+    fontSize: 10,
     color: '#777',
+    fontWeight: '600',
   },
 
   sectionHeader: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    alignItems: 'center',
+    alignItems: 'flex-end',
     marginBottom: 14,
   },
 
+  frameworkHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'flex-end',
+    marginBottom: 14,
+  },
+
+  sectionEyebrow: {
+    fontSize: 9,
+    fontWeight: '900',
+    letterSpacing: 1.4,
+    color: '#858978',
+    marginBottom: 3,
+  },
+
   sectionTitle: {
-    fontSize: 21,
-    fontWeight: '800',
-    letterSpacing: -0.5,
+    fontSize: 22,
+    fontWeight: '900',
+    letterSpacing: -0.6,
     color: '#111',
   },
 
-  sectionAction: {
-    fontSize: 10,
-    fontWeight: '800',
-    letterSpacing: 1,
+  viewButton: {
+    paddingVertical: 6,
+    paddingLeft: 10,
+  },
+
+  viewButtonText: {
+    fontSize: 9,
+    fontWeight: '900',
+    letterSpacing: 0.8,
     color: '#777',
   },
 
@@ -372,144 +610,173 @@ const styles = StyleSheet.create({
 
   practiceCard: {
     width: '48.5%',
-    minHeight: 155,
+    minHeight: 190,
     backgroundColor: '#FFF',
     borderWidth: 1,
-    borderColor: '#E5E5E1',
-    padding: 16,
+    borderColor: '#E3E3DE',
+    padding: 15,
     position: 'relative',
     marginRight: '3%',
     marginBottom: 10,
   },
 
-  iconBox: {
-    width: 40,
-    height: 40,
-    backgroundColor: '#F0F0EC',
+  practiceIcon: {
+    width: 43,
+    height: 43,
+    backgroundColor: '#EEF0E7',
     alignItems: 'center',
     justifyContent: 'center',
-    marginBottom: 17,
+    marginBottom: 15,
+  },
+
+  practiceEmoji: {
+    fontSize: 19,
   },
 
   cardTitle: {
     fontSize: 17,
-    fontWeight: '800',
+    fontWeight: '900',
     color: '#111',
-    marginBottom: 5,
+    marginBottom: 6,
   },
 
   cardDescription: {
-    fontSize: 12,
+    fontSize: 11,
     lineHeight: 17,
     color: '#858585',
-    paddingRight: 5,
+    paddingRight: 3,
+  },
+
+  cardBottom: {
+    position: 'absolute',
+    left: 15,
+    right: 15,
+    bottom: 13,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    borderTopWidth: 1,
+    borderTopColor: '#EEEEEA',
+    paddingTop: 9,
+  },
+
+  cardAction: {
+    fontSize: 8,
+    fontWeight: '900',
+    letterSpacing: 1,
+    color: '#777',
   },
 
   cardArrow: {
-    position: 'absolute',
-    right: 13,
-    bottom: 13,
-  },
-
-  arrow: {
-    fontSize: 18,
-    fontWeight: '600',
+    fontSize: 16,
+    fontWeight: '900',
     color: '#111',
   },
 
-  featureCard: {
+  challengeCard: {
     backgroundColor: '#111',
-    minHeight: 235,
-    marginBottom: 34,
+    minHeight: 260,
+    marginBottom: 32,
+    padding: 22,
     flexDirection: 'row',
     overflow: 'hidden',
   },
 
-  featureAccent: {
-    width: 6,
-    backgroundColor: '#D7FF4F',
-  },
-
-  featureContent: {
+  challengeLeft: {
     flex: 1,
-    padding: 22,
   },
 
-  featureEyebrow: {
-    fontSize: 10,
-    fontWeight: '800',
+  challengeEmoji: {
+    fontSize: 23,
+    marginBottom: 15,
+  },
+
+  challengeLabel: {
+    fontSize: 9,
+    fontWeight: '900',
     letterSpacing: 1.5,
-    color: '#AFAFAF',
-    marginBottom: 10,
+    color: '#D7FF4F',
+    marginBottom: 9,
   },
 
-  featureTitle: {
-    fontSize: 25,
-    lineHeight: 29,
-    fontWeight: '800',
+  challengeTitle: {
+    fontSize: 26,
+    lineHeight: 30,
+    fontWeight: '900',
     letterSpacing: -0.7,
     color: '#FFF',
-    maxWidth: 290,
+    maxWidth: 280,
   },
 
-  featureDescription: {
-    fontSize: 13,
-    lineHeight: 19,
-    color: '#AFAFAF',
-    marginTop: 10,
-    maxWidth: 290,
+  challengeDescription: {
+    fontSize: 12,
+    lineHeight: 18,
+    color: '#999',
+    marginTop: 9,
+    maxWidth: 285,
   },
 
-  startButton: {
+  challengeButton: {
     alignSelf: 'flex-start',
-    backgroundColor: '#D7FF4F',
-    paddingVertical: 12,
-    paddingHorizontal: 15,
-    marginTop: 18,
     flexDirection: 'row',
     alignItems: 'center',
+    backgroundColor: '#D7FF4F',
+    paddingVertical: 12,
+    paddingHorizontal: 14,
+    marginTop: 19,
   },
 
-  startButtonText: {
-    fontSize: 10,
+  challengeButtonText: {
+    fontSize: 9,
     fontWeight: '900',
-    letterSpacing: 1,
+    letterSpacing: 0.8,
     color: '#111',
     marginRight: 10,
   },
 
-  startArrow: {
-    fontSize: 17,
-    fontWeight: '700',
+  challengeButtonArrow: {
+    fontSize: 16,
+    fontWeight: '900',
     color: '#111',
+  },
+
+  challengeNumber: {
+    position: 'absolute',
+    right: -10,
+    bottom: -25,
+  },
+
+  challengeNumberText: {
+    fontSize: 115,
+    fontWeight: '900',
+    color: '#1D1D1D',
   },
 
   skillList: {
     marginBottom: 32,
     borderTopWidth: 1,
-    borderTopColor: '#E2E2DE',
+    borderTopColor: '#DFDFDA',
   },
 
   skillRow: {
-    minHeight: 76,
+    minHeight: 78,
     flexDirection: 'row',
     alignItems: 'center',
     borderBottomWidth: 1,
-    borderBottomColor: '#E2E2DE',
+    borderBottomColor: '#DFDFDA',
   },
 
   skillIcon: {
-    width: 43,
-    height: 43,
-    backgroundColor: '#EBEBE7',
+    width: 45,
+    height: 45,
+    backgroundColor: '#E9EAE1',
     alignItems: 'center',
     justifyContent: 'center',
     marginRight: 13,
   },
 
-  skillSymbol: {
-    fontSize: 22,
-    color: '#111',
+  skillEmoji: {
+    fontSize: 19,
   },
 
   skillInfo: {
@@ -518,29 +785,39 @@ const styles = StyleSheet.create({
 
   skillTitle: {
     fontSize: 15,
-    fontWeight: '800',
+    fontWeight: '900',
     color: '#111',
     marginBottom: 3,
   },
 
   skillDescription: {
-    fontSize: 12,
+    fontSize: 11,
     color: '#888',
   },
 
-  chevron: {
-    fontSize: 25,
-    color: '#999',
+  skillArrow: {
+    width: 32,
+    height: 32,
+    backgroundColor: '#FFF',
+    alignItems: 'center',
+    justifyContent: 'center',
     marginLeft: 10,
+  },
+
+  chevron: {
+    fontSize: 16,
+    color: '#111',
+    fontWeight: '800',
   },
 
   frameworkScroll: {
     paddingRight: 20,
+    marginBottom: 30,
   },
 
   frameworkCard: {
-    width: 205,
-    height: 145,
+    width: 210,
+    height: 165,
     backgroundColor: '#FFF',
     borderWidth: 1,
     borderColor: '#E2E2DE',
@@ -548,26 +825,74 @@ const styles = StyleSheet.create({
     marginRight: 10,
   },
 
+  frameworkTop: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+
   frameworkNumber: {
     fontSize: 10,
-    fontWeight: '800',
+    fontWeight: '900',
     color: '#999',
     letterSpacing: 1,
-    marginBottom: 15,
+  },
+
+  frameworkEmoji: {
+    fontSize: 18,
   },
 
   frameworkTitle: {
-    fontSize: 19,
+    fontSize: 20,
     fontWeight: '900',
     color: '#111',
     letterSpacing: 1,
+    marginTop: 22,
     marginBottom: 7,
   },
 
   frameworkDescription: {
-    fontSize: 12,
+    fontSize: 11,
     lineHeight: 17,
     color: '#777',
+  },
+
+  footerCard: {
+    backgroundColor: '#E8E9DF',
+    minHeight: 85,
+    padding: 16,
+    flexDirection: 'row',
+    alignItems: 'center',
+    borderWidth: 1,
+    borderColor: '#DCDDCE',
+  },
+
+  footerEmoji: {
+    fontSize: 25,
+    marginRight: 13,
+  },
+
+  footerContent: {
+    flex: 1,
+  },
+
+  footerTitle: {
+    fontSize: 15,
+    fontWeight: '900',
+    color: '#111',
+    marginBottom: 3,
+  },
+
+  footerText: {
+    fontSize: 11,
+    color: '#777',
+  },
+
+  footerArrow: {
+    fontSize: 20,
+    fontWeight: '900',
+    color: '#111',
+    marginLeft: 10,
   },
 
   bottomSpace: {
