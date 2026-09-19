@@ -17,7 +17,7 @@ export default function ModalScreen() {
           <View style={styles.brandTop}>
             <View style={styles.brandMark}>
               <View style={styles.brandMarkInner}>
-                <Text style={styles.brandMarkText}>M</Text>
+                <Text style={styles.brandMarkText}>◖⬮◗</Text>
               </View>
             </View>
 
