@@ -903,8 +903,8 @@ const styles = StyleSheet.create({
   },
 
   footerText: {
-    fontSize: 11,
-    lineHeight: 16,
+    fontSize: 12,
+    lineHeight: 17,
     color: '#777',
   },
 
