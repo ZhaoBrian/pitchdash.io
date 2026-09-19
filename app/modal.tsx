@@ -5,24 +5,58 @@ import { Text, View } from '@/components/Themed';
 export default function ModalScreen() {
   return (
     <View style={styles.container}>
-      <StatusBar style="dark" />
+      <StatusBar style="light" />
 
       <ScrollView
         showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.content}
       >
-        <View style={styles.header}>
-          <View style={styles.headerText}>
-            <Text style={styles.eyebrow}>YOUR SPEAKING LAB</Text>
-            <Text style={styles.title}>Good morning.</Text>
-            <Text style={styles.subtitle}>
-              Build confidence, one rep at a time.
+        <View style={styles.brandBanner}>
+          <View style={styles.brandBannerGlow} />
+
+          <View style={styles.brandTop}>
+            <View style={styles.brandMark}>
+              <View style={styles.brandMarkInner}>
+                <Text style={styles.brandMarkText}>M</Text>
+              </View>
+            </View>
+
+            <Text style={styles.brandLabel}>PUBLIC SPEAKING PLATFORM</Text>
+
+            <Pressable style={styles.profile}>
+              <Text style={styles.profileText}>B</Text>
+            </Pressable>
+          </View>
+
+          <View style={styles.brandMain}>
+            <Text style={styles.brandTitle}>MODAL</Text>
+            <Text style={styles.brandSubtitle}>
+              Speak clearly. Pitch boldly. Be remembered.
             </Text>
           </View>
 
-          <Pressable style={styles.profile}>
-            <Text style={styles.profileText}>B</Text>
-          </Pressable>
+          <View style={styles.brandBottom}>
+            <View style={styles.brandLine}>
+              <View style={styles.brandLineFill} />
+            </View>
+
+            <Text style={styles.brandStatus}>YOUR SPEAKING LAB</Text>
+          </View>
+        </View>
+
+        <View style={styles.welcomeRow}>
+          <View>
+            <Text style={styles.eyebrow}>WELCOME BACK</Text>
+            <Text style={styles.title}>Good morning.</Text>
+            <Text style={styles.subtitle}>
+              Ready for your next speaking rep?
+            </Text>
+          </View>
+
+          <View style={styles.scoreCircle}>
+            <Text style={styles.scoreNumber}>68</Text>
+            <Text style={styles.scoreLabel}>SCORE</Text>
+          </View>
         </View>
 
         <View style={styles.heroCard}>
@@ -31,7 +65,7 @@ export default function ModalScreen() {
               <Text style={styles.heroBadgeText}>TODAY'S FOCUS</Text>
             </View>
 
-            <Text style={styles.heroScore}>68%</Text>
+            <Text style={styles.heroStatus}>ACTIVE</Text>
           </View>
 
           <Text style={styles.heroTitle}>Become harder to ignore.</Text>
@@ -51,16 +85,25 @@ export default function ModalScreen() {
           <View style={styles.statCard}>
             <Text style={styles.statNumber}>7</Text>
             <Text style={styles.statLabel}>DAY STREAK</Text>
+            <View style={styles.statLine}>
+              <View style={styles.statLineFill} />
+            </View>
           </View>
 
           <View style={styles.statCard}>
             <Text style={styles.statNumber}>12</Text>
             <Text style={styles.statLabel}>REPS DONE</Text>
+            <View style={styles.statLine}>
+              <View style={styles.statLineFill} />
+            </View>
           </View>
 
           <View style={styles.statCard}>
             <Text style={styles.statNumber}>+18%</Text>
             <Text style={styles.statLabel}>THIS WEEK</Text>
+            <View style={styles.statLine}>
+              <View style={styles.statLineFill} />
+            </View>
           </View>
         </View>
 
@@ -80,7 +123,7 @@ export default function ModalScreen() {
 
           <View style={styles.progressFooter}>
             <Text style={styles.progressSmall}>6 reps remaining</Text>
-            <Text style={styles.progressSmall}>Keep going</Text>
+            <Text style={styles.progressSmall}>Keep building</Text>
           </View>
         </View>
 
@@ -167,7 +210,10 @@ export default function ModalScreen() {
 
         <View style={styles.challengeCard}>
           <View style={styles.challengeContent}>
-            <Text style={styles.challengeLabel}>DAILY CHALLENGE</Text>
+            <View style={styles.challengeHeader}>
+              <Text style={styles.challengeLabel}>DAILY CHALLENGE</Text>
+              <Text style={styles.challengeTime}>01:00</Text>
+            </View>
 
             <Text style={styles.challengeTitle}>
               Tell a story in 60 seconds.
@@ -362,57 +408,182 @@ const styles = StyleSheet.create({
   },
 
   content: {
-    paddingTop: Platform.OS === 'ios' ? 64 : 42,
+    paddingTop: Platform.OS === 'ios' ? 20 : 12,
     paddingHorizontal: 20,
   },
 
-  header: {
+  brandBanner: {
+    backgroundColor: '#111',
+    minHeight: 205,
+    marginBottom: 26,
+    padding: 20,
+    overflow: 'hidden',
+    position: 'relative',
+  },
+
+  brandBannerGlow: {
+    position: 'absolute',
+    width: 230,
+    height: 230,
+    borderRadius: 115,
+    backgroundColor: '#D7FF4F',
+    opacity: 0.12,
+    right: -85,
+    top: -85,
+  },
+
+  brandTop: {
     flexDirection: 'row',
-    alignItems: 'flex-start',
-    justifyContent: 'space-between',
-    marginBottom: 25,
+    alignItems: 'center',
   },
 
-  headerText: {
-    flex: 1,
+  brandMark: {
+    width: 39,
+    height: 39,
+    borderWidth: 1,
+    borderColor: '#D7FF4F',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginRight: 10,
   },
 
-  eyebrow: {
-    fontSize: 10,
-    fontWeight: '900',
-    letterSpacing: 1.6,
-    color: '#777',
-    marginBottom: 8,
+  brandMarkInner: {
+    width: 27,
+    height: 27,
+    backgroundColor: '#D7FF4F',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 
-  title: {
-    fontSize: 34,
-    fontWeight: '900',
-    letterSpacing: -1.4,
+  brandMarkText: {
     color: '#111',
+    fontSize: 14,
+    fontWeight: '900',
   },
 
-  subtitle: {
-    fontSize: 14,
-    color: '#777',
-    marginTop: 5,
-    lineHeight: 20,
+  brandLabel: {
+    flex: 1,
+    fontSize: 8,
+    fontWeight: '900',
+    letterSpacing: 1.2,
+    color: '#999',
   },
 
   profile: {
-    width: 46,
-    height: 46,
-    borderRadius: 23,
-    backgroundColor: '#111',
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    backgroundColor: '#252525',
     alignItems: 'center',
     justifyContent: 'center',
-    marginLeft: 15,
+    borderWidth: 1,
+    borderColor: '#333',
   },
 
   profileText: {
     color: '#D7FF4F',
-    fontSize: 16,
+    fontSize: 14,
     fontWeight: '900',
+  },
+
+  brandMain: {
+    marginTop: 31,
+  },
+
+  brandTitle: {
+    fontSize: 48,
+    lineHeight: 50,
+    fontWeight: '900',
+    letterSpacing: -2,
+    color: '#FFF',
+  },
+
+  brandSubtitle: {
+    fontSize: 12,
+    lineHeight: 18,
+    color: '#A3A3A3',
+    marginTop: 5,
+    maxWidth: 280,
+  },
+
+  brandBottom: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginTop: 25,
+  },
+
+  brandLine: {
+    width: 55,
+    height: 3,
+    backgroundColor: '#333',
+    marginRight: 10,
+    overflow: 'hidden',
+  },
+
+  brandLineFill: {
+    width: '65%',
+    height: '100%',
+    backgroundColor: '#D7FF4F',
+  },
+
+  brandStatus: {
+    fontSize: 8,
+    fontWeight: '900',
+    letterSpacing: 1.3,
+    color: '#777',
+  },
+
+  welcomeRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginBottom: 22,
+  },
+
+  eyebrow: {
+    fontSize: 9,
+    fontWeight: '900',
+    letterSpacing: 1.5,
+    color: '#777',
+    marginBottom: 6,
+  },
+
+  title: {
+    fontSize: 29,
+    fontWeight: '900',
+    letterSpacing: -1,
+    color: '#111',
+  },
+
+  subtitle: {
+    fontSize: 13,
+    color: '#777',
+    marginTop: 4,
+  },
+
+  scoreCircle: {
+    width: 58,
+    height: 58,
+    borderRadius: 29,
+    borderWidth: 2,
+    borderColor: '#111',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#D7FF4F',
+  },
+
+  scoreNumber: {
+    fontSize: 17,
+    fontWeight: '900',
+    color: '#111',
+  },
+
+  scoreLabel: {
+    fontSize: 6,
+    fontWeight: '900',
+    letterSpacing: 0.7,
+    color: '#555',
+    marginTop: 1,
   },
 
   heroCard: {
@@ -442,10 +613,11 @@ const styles = StyleSheet.create({
     color: '#D7FF4F',
   },
 
-  heroScore: {
-    fontSize: 15,
+  heroStatus: {
+    fontSize: 8,
     fontWeight: '900',
-    color: '#D7FF4F',
+    letterSpacing: 1,
+    color: '#777',
   },
 
   heroTitle: {
@@ -501,7 +673,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#E4E4DF',
     padding: 14,
-    minHeight: 100,
+    minHeight: 105,
     marginRight: 8,
   },
 
@@ -509,7 +681,7 @@ const styles = StyleSheet.create({
     fontSize: 22,
     fontWeight: '900',
     color: '#111',
-    marginTop: 8,
+    marginTop: 5,
     marginBottom: 4,
   },
 
@@ -518,6 +690,19 @@ const styles = StyleSheet.create({
     fontWeight: '900',
     letterSpacing: 0.8,
     color: '#888',
+  },
+
+  statLine: {
+    height: 3,
+    backgroundColor: '#ECECE8',
+    marginTop: 12,
+    overflow: 'hidden',
+  },
+
+  statLineFill: {
+    width: '70%',
+    height: '100%',
+    backgroundColor: '#111',
   },
 
   progressCard: {
@@ -705,12 +890,25 @@ const styles = StyleSheet.create({
     flex: 1,
   },
 
+  challengeHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    maxWidth: 285,
+  },
+
   challengeLabel: {
     fontSize: 9,
     fontWeight: '900',
     letterSpacing: 1.5,
     color: '#D7FF4F',
-    marginBottom: 10,
+  },
+
+  challengeTime: {
+    fontSize: 9,
+    fontWeight: '900',
+    letterSpacing: 1,
+    color: '#777',
   },
 
   challengeTitle: {
@@ -720,6 +918,7 @@ const styles = StyleSheet.create({
     letterSpacing: -0.7,
     color: '#FFF',
     maxWidth: 280,
+    marginTop: 12,
   },
 
   challengeDescription: {
@@ -887,7 +1086,7 @@ const styles = StyleSheet.create({
   footerLine: {
     width: 4,
     height: 48,
-    backgroundColor: '#111',
+    backgroundColor: '#D7FF4F',
     marginRight: 14,
   },
 
@@ -903,8 +1102,8 @@ const styles = StyleSheet.create({
   },
 
   footerText: {
-    fontSize: 12,
-    lineHeight: 17,
+    fontSize: 11,
+    lineHeight: 16,
     color: '#777',
   },
 
