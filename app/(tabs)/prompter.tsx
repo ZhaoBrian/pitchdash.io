@@ -1,321 +1,308 @@
 import { StatusBar } from 'expo-status-bar';
-import { useEffect, useMemo, useState } from 'react';
-import {
-  Platform,
-  StyleSheet,
-  ScrollView,
-  Pressable,
-  TextInput,
-  View as RNView,
-} from 'react-native';
+import { Platform, StyleSheet, ScrollView, Pressable } from 'react-native';
 import { Text, View } from '@/components/Themed';
 
-export default function PrompterScreen() {
-  const [script, setScript] = useState(
-    'Good morning everyone.\n\nToday I want to talk about why confidence is built through practice, not perfection.\n\nEvery time we speak, we have an opportunity to make an idea clearer and more memorable.\n\nSo instead of waiting until we feel ready, let us practice until speaking feels natural.'
-  );
-
-  const [speed, setSpeed] = useState(130);
-  const [currentSection, setCurrentSection] = useState(0);
-  const [remaining, setRemaining] = useState(0);
-  const [running, setRunning] = useState(false);
-
-  const sections = useMemo(() => {
-    return script
-      .split(/\n\s*\n/)
-      .map(section => section.trim())
-      .filter(Boolean);
-  }, [script]);
-
-  const sectionTimes = useMemo(() => {
-    return sections.map(section => {
-      const words = section.split(/\s+/).filter(Boolean).length;
-      return Math.max(3, Math.ceil((words / speed) * 60));
-    });
-  }, [sections, speed]);
-
-  const totalTime = useMemo(() => {
-    return sectionTimes.reduce((total, time) => total + time, 0);
-  }, [sectionTimes]);
-
-  useEffect(() => {
-    if (!running || sections.length === 0) {
-      return;
-    }
-
-    if (remaining <= 0) {
-      if (currentSection < sections.length - 1) {
-        setCurrentSection(currentSection + 1);
-        setRemaining(sectionTimes[currentSection + 1] || 3);
-      } else {
-        setRunning(false);
-        setRemaining(0);
-      }
-
-      return;
-    }
-
-    const timer = setInterval(() => {
-      setRemaining(value => Math.max(0, value - 1));
-    }, 1000);
-
-    return () => clearInterval(timer);
-  }, [
-    running,
-    remaining,
-    currentSection,
-    sections.length,
-    sectionTimes,
-  ]);
-
-  useEffect(() => {
-    if (!running && sections.length > 0) {
-      setRemaining(sectionTimes[currentSection] || 0);
-    }
-  }, [sectionTimes]);
-
-  const startPrompter = () => {
-    if (sections.length === 0) {
-      return;
-    }
-
-    if (currentSection >= sections.length) {
-      setCurrentSection(0);
-    }
-
-    setRemaining(sectionTimes[currentSection] || 3);
-    setRunning(true);
-  };
-
-  const pausePrompter = () => {
-    setRunning(false);
-  };
-
-  const resetPrompter = () => {
-    setRunning(false);
-    setCurrentSection(0);
-    setRemaining(sectionTimes[0] || 0);
-  };
-
-  const formatTime = (seconds: number) => {
-    const minutes = Math.floor(seconds / 60);
-    const secs = seconds % 60;
-
-    return `${String(minutes).padStart(2, '0')}:${String(secs).padStart(
-      2,
-      '0'
-    )}`;
-  };
-
-  const wordCount = script.split(/\s+/).filter(Boolean).length;
-
+export default function ProgressScreen() {
   return (
     <View style={styles.container}>
-      <StatusBar style="light" />
+      <StatusBar style="dark" />
 
       <ScrollView
         showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.content}
       >
-        <View style={styles.header}>
+        <View style={styles.topBar}>
           <View>
-            <Text style={styles.eyebrow}>MODAL / TOOL</Text>
-            <Text style={styles.title}>Screen Prompter</Text>
-            <Text style={styles.subtitle}>
-              Speak naturally while MODAL keeps your pace.
-            </Text>
+            <Text style={styles.miniLabel}>MODAL / YOUR JOURNEY</Text>
+            <Text style={styles.pageTitle}>Progress</Text>
           </View>
 
-          <View style={styles.mark}>
-            <Text style={styles.markText}>M</Text>
+          <View style={styles.profile}>
+            <Text style={styles.profileText}>B</Text>
           </View>
         </View>
 
-        <View style={styles.editorCard}>
-          <View style={styles.cardHeader}>
-            <View>
-              <Text style={styles.cardEyebrow}>YOUR SCRIPT</Text>
-              <Text style={styles.cardTitle}>Enter what you want to say</Text>
-            </View>
-
-            <Text style={styles.wordCount}>{wordCount} WORDS</Text>
-          </View>
-
-          <TextInput
-            value={script}
-            onChangeText={setScript}
-            multiline
-            textAlignVertical="top"
-            placeholder="Type or paste your speech here..."
-            placeholderTextColor="#999"
-            style={styles.input}
-          />
-
-          <Text style={styles.inputHint}>
-            Separate sections with a blank line. Each section will receive its
-            own calculated timing.
+        <View style={styles.introRow}>
+          <View style={styles.introLine} />
+          <Text style={styles.introText}>
+            Small improvements compound into confident speaking.
           </Text>
         </View>
 
-        <View style={styles.settingsCard}>
-          <View style={styles.settingsHeader}>
+        <View style={styles.scoreCard}>
+          <View style={styles.scoreHeader}>
             <View>
-              <Text style={styles.cardEyebrow}>TIMING</Text>
-              <Text style={styles.cardTitle}>Speaking speed</Text>
+              <Text style={styles.scoreLabel}>CURRENT LEVEL</Text>
+              <Text style={styles.levelText}>BUILDING MOMENTUM</Text>
             </View>
 
-            <Text style={styles.speedValue}>{speed} WPM</Text>
+            <View style={styles.scoreBadge}>
+              <Text style={styles.scoreBadgeText}>68</Text>
+            </View>
           </View>
 
-          <View style={styles.speedRow}>
-            <Pressable
-              style={[
-                styles.speedButton,
-                speed === 100 && styles.speedButtonActive,
-              ]}
-              onPress={() => setSpeed(100)}
-            >
-              <Text
-                style={[
-                  styles.speedButtonText,
-                  speed === 100 && styles.speedButtonTextActive,
-                ]}
-              >
-                SLOW
-              </Text>
-            </Pressable>
+          <View style={styles.scoreMain}>
+            <Text style={styles.scoreNumber}>68</Text>
 
-            <Pressable
-              style={[
-                styles.speedButton,
-                speed === 130 && styles.speedButtonActive,
-              ]}
-              onPress={() => setSpeed(130)}
-            >
-              <Text
-                style={[
-                  styles.speedButtonText,
-                  speed === 130 && styles.speedButtonTextActive,
-                ]}
-              >
-                NATURAL
+            <View style={styles.scoreDetails}>
+              <Text style={styles.scoreTitle}>SPEAKING SCORE</Text>
+              <Text style={styles.scoreDescription}>
+                Your overall performance across recent practice sessions.
               </Text>
-            </Pressable>
 
-            <Pressable
-              style={[
-                styles.speedButton,
-                speed === 160 && styles.speedButtonActive,
-              ]}
-              onPress={() => setSpeed(160)}
-            >
-              <Text
-                style={[
-                  styles.speedButtonText,
-                  speed === 160 && styles.speedButtonTextActive,
-                ]}
-              >
-                FAST
-              </Text>
-            </Pressable>
+              <View style={styles.changeRow}>
+                <View style={styles.changePill}>
+                  <Text style={styles.changePillText}>+18%</Text>
+                </View>
+
+                <Text style={styles.changeText}>from last week</Text>
+              </View>
+            </View>
           </View>
 
-          <View style={styles.timingStats}>
+          <View style={styles.scoreTrack}>
+            <View style={styles.scoreFill} />
+          </View>
+        </View>
+
+        <View style={styles.section}>
+          <View style={styles.sectionHeading}>
             <View>
-              <Text style={styles.timingNumber}>{formatTime(totalTime)}</Text>
-              <Text style={styles.timingLabel}>EST. TOTAL</Text>
+              <Text style={styles.sectionLabel}>SKILL MAP</Text>
+              <Text style={styles.sectionTitle}>Your speaking profile</Text>
             </View>
 
-            <View>
-              <Text style={styles.timingNumber}>{sections.length}</Text>
-              <Text style={styles.timingLabel}>SECTIONS</Text>
+            <Text style={styles.sectionSmall}>4 SKILLS</Text>
+          </View>
+
+          <View style={styles.skillsGrid}>
+            <View style={styles.skillCard}>
+              <View style={styles.skillIcon}>
+                <Text style={styles.skillIconText}>V</Text>
+              </View>
+
+              <View style={styles.skillTop}>
+                <Text style={styles.skillName}>Voice</Text>
+                <Text style={styles.skillScore}>72</Text>
+              </View>
+
+              <Text style={styles.skillDescription}>
+                Pace, tone, volume
+              </Text>
+
+              <View style={styles.skillTrack}>
+                <View style={[styles.skillFill, { width: '72%' }]} />
+              </View>
             </View>
 
-            <View>
-              <Text style={styles.timingNumber}>{speed}</Text>
-              <Text style={styles.timingLabel}>WORDS / MIN</Text>
+            <View style={styles.skillCard}>
+              <View style={styles.skillIcon}>
+                <Text style={styles.skillIconText}>B</Text>
+              </View>
+
+              <View style={styles.skillTop}>
+                <Text style={styles.skillName}>Presence</Text>
+                <Text style={styles.skillScore}>61</Text>
+              </View>
+
+              <Text style={styles.skillDescription}>
+                Posture, gestures
+              </Text>
+
+              <View style={styles.skillTrack}>
+                <View style={[styles.skillFill, { width: '61%' }]} />
+              </View>
+            </View>
+
+            <View style={styles.skillCard}>
+              <View style={styles.skillIcon}>
+                <Text style={styles.skillIconText}>A</Text>
+              </View>
+
+              <View style={styles.skillTop}>
+                <Text style={styles.skillName}>Audience</Text>
+                <Text style={styles.skillScore}>54</Text>
+              </View>
+
+              <Text style={styles.skillDescription}>
+                Clarity, connection
+              </Text>
+
+              <View style={styles.skillTrack}>
+                <View style={[styles.skillFill, { width: '54%' }]} />
+              </View>
+            </View>
+
+            <View style={styles.skillCard}>
+              <View style={styles.skillIcon}>
+                <Text style={styles.skillIconText}>P</Text>
+              </View>
+
+              <View style={styles.skillTop}>
+                <Text style={styles.skillName}>Pitching</Text>
+                <Text style={styles.skillScore}>48</Text>
+              </View>
+
+              <Text style={styles.skillDescription}>
+                Structure, impact
+              </Text>
+
+              <View style={styles.skillTrack}>
+                <View style={[styles.skillFill, { width: '48%' }]} />
+              </View>
             </View>
           </View>
         </View>
 
-        <View style={styles.prompterCard}>
-          <View style={styles.prompterTop}>
+        <View style={styles.streakCard}>
+          <View style={styles.streakHeader}>
             <View>
-              <Text style={styles.prompterLabel}>LIVE PROMPTER</Text>
-              <Text style={styles.prompterSection}>
-                SECTION {sections.length === 0 ? 0 : currentSection + 1} /{' '}
-                {sections.length}
-              </Text>
+              <Text style={styles.streakLabel}>CURRENT STREAK</Text>
+              <Text style={styles.streakTitle}>7 days of showing up.</Text>
             </View>
 
-            <View style={styles.timer}>
-              <Text style={styles.timerText}>{formatTime(remaining)}</Text>
+            <View style={styles.streakNumberBox}>
+              <Text style={styles.streakNumber}>7</Text>
+              <Text style={styles.streakDays}>DAYS</Text>
             </View>
           </View>
 
-          <RNView style={styles.guideLine} />
+          <View style={styles.daysRow}>
+            <View style={styles.day}>
+              <View style={styles.dayDone}>
+                <Text style={styles.dayDoneText}>✓</Text>
+              </View>
+              <Text style={styles.dayName}>M</Text>
+            </View>
 
-          <RNView style={styles.scriptWindow}>
-            <Text style={styles.promptText}>
-              {sections[currentSection] ||
-                'Enter your script above to begin.'}
-            </Text>
-          </RNView>
+            <View style={styles.day}>
+              <View style={styles.dayDone}>
+                <Text style={styles.dayDoneText}>✓</Text>
+              </View>
+              <Text style={styles.dayName}>T</Text>
+            </View>
 
-          <RNView style={styles.guideLine} />
+            <View style={styles.day}>
+              <View style={styles.dayDone}>
+                <Text style={styles.dayDoneText}>✓</Text>
+              </View>
+              <Text style={styles.dayName}>W</Text>
+            </View>
 
-          <View style={styles.prompterFooter}>
-            <Text style={styles.liveStatus}>
-              {running ? 'PROMPTER RUNNING' : 'READY TO SPEAK'}
-            </Text>
+            <View style={styles.day}>
+              <View style={styles.dayDone}>
+                <Text style={styles.dayDoneText}>✓</Text>
+              </View>
+              <Text style={styles.dayName}>T</Text>
+            </View>
 
-            <View style={styles.progressDots}>
-              {sections.map((_, index) => (
-                <RNView
-                  key={index}
-                  style={[
-                    styles.progressDot,
-                    index === currentSection && styles.progressDotActive,
-                    index < currentSection && styles.progressDotComplete,
-                  ]}
-                />
-              ))}
+            <View style={styles.day}>
+              <View style={styles.dayDone}>
+                <Text style={styles.dayDoneText}>✓</Text>
+              </View>
+              <Text style={styles.dayName}>F</Text>
+            </View>
+
+            <View style={styles.day}>
+              <View style={styles.dayToday}>
+                <Text style={styles.dayTodayText}>S</Text>
+              </View>
+              <Text style={styles.dayName}>S</Text>
+            </View>
+
+            <View style={styles.day}>
+              <View style={styles.dayEmpty}>
+                <Text style={styles.dayEmptyText}>S</Text>
+              </View>
+              <Text style={styles.dayName}>M</Text>
             </View>
           </View>
         </View>
 
-        <View style={styles.controls}>
-          <Pressable style={styles.resetButton} onPress={resetPrompter}>
-            <Text style={styles.resetText}>RESET</Text>
+        <View style={styles.section}>
+          <View style={styles.sectionHeading}>
+            <View>
+              <Text style={styles.sectionLabel}>ACTIVITY</Text>
+              <Text style={styles.sectionTitle}>The numbers behind your reps</Text>
+            </View>
+          </View>
+
+          <View style={styles.statGrid}>
+            <View style={styles.statCard}>
+              <Text style={styles.statNumber}>12</Text>
+              <Text style={styles.statLabel}>REPS COMPLETED</Text>
+              <Text style={styles.statDetail}>+4 this week</Text>
+            </View>
+
+            <View style={styles.statCard}>
+              <Text style={styles.statNumber}>18</Text>
+              <Text style={styles.statLabel}>MINUTES PRACTICED</Text>
+              <Text style={styles.statDetail}>+6 this week</Text>
+            </View>
+
+            <View style={styles.statCard}>
+              <Text style={styles.statNumber}>68</Text>
+              <Text style={styles.statLabel}>AVERAGE SCORE</Text>
+              <Text style={styles.statDetail}>+8 this week</Text>
+            </View>
+
+            <View style={styles.statCard}>
+              <Text style={styles.statNumber}>4</Text>
+              <Text style={styles.statLabel}>SKILLS TRAINED</Text>
+              <Text style={styles.statDetail}>All active</Text>
+            </View>
+          </View>
+        </View>
+
+        <View style={styles.milestoneCard}>
+          <View style={styles.milestoneTop}>
+            <View style={styles.milestoneTag}>
+              <Text style={styles.milestoneTagText}>NEXT MILESTONE</Text>
+            </View>
+
+            <Text style={styles.milestoneNumber}>75</Text>
+          </View>
+
+          <Text style={styles.milestoneTitle}>
+            You're 7 points away.
+          </Text>
+
+          <Text style={styles.milestoneText}>
+            Keep building consistency across your practice sessions to reach
+            your next speaking milestone.
+          </Text>
+
+          <View style={styles.milestoneTrack}>
+            <View style={styles.milestoneFill} />
+          </View>
+
+          <View style={styles.milestoneBottom}>
+            <Text style={styles.milestoneCurrent}>68 CURRENT</Text>
+            <Text style={styles.milestoneGoal}>75 GOAL</Text>
+          </View>
+
+          <Pressable style={styles.milestoneButton}>
+            <Text style={styles.milestoneButtonText}>KEEP PRACTICING</Text>
+            <Text style={styles.milestoneArrow}>→</Text>
           </Pressable>
-
-          <Pressable
-            style={styles.startButton}
-            onPress={running ? pausePrompter : startPrompter}
-          >
-            <Text style={styles.startText}>
-              {running ? 'PAUSE' : 'START PROMPTER'}
-            </Text>
-
-            <Text style={styles.startArrow}>
-              {running ? 'Ⅱ' : '→'}
-            </Text>
-          </Pressable>
         </View>
 
-        <View style={styles.infoCard}>
-          <View style={styles.infoNumber}>
-            <Text style={styles.infoNumberText}>01</Text>
+        <View style={styles.quoteCard}>
+          <View style={styles.quoteMark}>
+            <Text style={styles.quoteMarkText}>“</Text>
           </View>
 
-          <View style={styles.infoContent}>
-            <Text style={styles.infoTitle}>How timing works</Text>
-            <Text style={styles.infoText}>
-              MODAL estimates each section using your word count and selected
-              speaking speed. When the timer reaches zero, the next section
-              automatically appears.
-            </Text>
-          </View>
+          <Text style={styles.quote}>
+            Confidence isn't something you wait for. It's something you
+            practice.
+          </Text>
+
+          <Text style={styles.quoteLabel}>MODAL PRINCIPLE / 01</Text>
+        </View>
+
+        <View style={styles.footer}>
+          <Text style={styles.footerBrand}>MODAL</Text>
+          <Text style={styles.footerText}>KEEP SHOWING UP.</Text>
         </View>
 
         <View style={styles.bottomSpace} />
@@ -338,365 +325,587 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
   },
 
-  header: {
+  topBar: {
     flexDirection: 'row',
-    alignItems: 'center',
     justifyContent: 'space-between',
-    marginBottom: 24,
+    alignItems: 'center',
+    marginBottom: 22,
   },
 
-  eyebrow: {
-    fontSize: 9,
+  miniLabel: {
+    color: '#999',
+    fontSize: 8,
     fontWeight: '900',
     letterSpacing: 1.6,
-    color: '#888',
     marginBottom: 5,
   },
 
-  title: {
-    fontSize: 32,
-    fontWeight: '900',
-    letterSpacing: -1,
+  pageTitle: {
     color: '#111',
+    fontSize: 35,
+    fontWeight: '900',
+    letterSpacing: -1.5,
   },
 
-  subtitle: {
+  profile: {
+    width: 42,
+    height: 42,
+    borderRadius: 21,
+    backgroundColor: '#111',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+
+  profileText: {
+    color: '#D7FF4F',
     fontSize: 13,
-    color: '#777',
-    marginTop: 4,
+    fontWeight: '900',
   },
 
-  mark: {
+  introRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 20,
+  },
+
+  introLine: {
+    width: 32,
+    height: 3,
+    backgroundColor: '#D7FF4F',
+    marginRight: 10,
+  },
+
+  introText: {
+    color: '#777',
+    fontSize: 11,
+    lineHeight: 16,
+    flex: 1,
+  },
+
+  scoreCard: {
+    backgroundColor: '#111',
+    padding: 22,
+    marginBottom: 30,
+  },
+
+  scoreHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'flex-start',
+  },
+
+  scoreLabel: {
+    color: '#777',
+    fontSize: 8,
+    fontWeight: '900',
+    letterSpacing: 1.4,
+  },
+
+  levelText: {
+    color: '#FFF',
+    fontSize: 12,
+    fontWeight: '900',
+    marginTop: 5,
+  },
+
+  scoreBadge: {
     width: 48,
     height: 48,
     backgroundColor: '#D7FF4F',
     alignItems: 'center',
     justifyContent: 'center',
-    borderRadius: 10,
   },
 
-  markText: {
+  scoreBadgeText: {
     color: '#111',
-    fontSize: 20,
+    fontSize: 18,
     fontWeight: '900',
   },
 
-  editorCard: {
-    backgroundColor: '#FFF',
-    borderWidth: 1,
-    borderColor: '#E2E2DE',
-    padding: 20,
-    marginBottom: 12,
-  },
-
-  cardHeader: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'flex-end',
-    marginBottom: 14,
-  },
-
-  cardEyebrow: {
-    fontSize: 9,
-    fontWeight: '900',
-    letterSpacing: 1.4,
-    color: '#888',
-    marginBottom: 4,
-  },
-
-  cardTitle: {
-    fontSize: 17,
-    fontWeight: '900',
-    color: '#111',
-  },
-
-  wordCount: {
-    fontSize: 8,
-    fontWeight: '900',
-    letterSpacing: 1,
-    color: '#888',
-  },
-
-  input: {
-    minHeight: 180,
-    backgroundColor: '#F5F5F1',
-    borderWidth: 1,
-    borderColor: '#E4E4DF',
-    padding: 16,
-    fontSize: 15,
-    lineHeight: 23,
-    color: '#111',
-    borderRadius: 4,
-  },
-
-  inputHint: {
-    fontSize: 10,
-    lineHeight: 15,
-    color: '#999',
-    marginTop: 10,
-  },
-
-  settingsCard: {
-    backgroundColor: '#E8E8E3',
-    borderWidth: 1,
-    borderColor: '#DDDDD7',
-    padding: 18,
-    marginBottom: 12,
-  },
-
-  settingsHeader: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'flex-end',
-  },
-
-  speedValue: {
-    fontSize: 20,
-    fontWeight: '900',
-    color: '#111',
-  },
-
-  speedRow: {
-    flexDirection: 'row',
-    marginTop: 16,
-  },
-
-  speedButton: {
-    flex: 1,
-    height: 42,
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: '#D7D7D1',
-    marginRight: 8,
-    borderWidth: 1,
-    borderColor: '#CECEC8',
-  },
-
-  speedButtonActive: {
-    backgroundColor: '#111',
-    borderColor: '#111',
-  },
-
-  speedButtonText: {
-    fontSize: 9,
-    fontWeight: '900',
-    letterSpacing: 1,
-    color: '#666',
-  },
-
-  speedButtonTextActive: {
-    color: '#D7FF4F',
-  },
-
-  timingStats: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginTop: 20,
-    paddingTop: 16,
-    borderTopWidth: 1,
-    borderTopColor: '#D1D1CB',
-  },
-
-  timingNumber: {
-    fontSize: 19,
-    fontWeight: '900',
-    color: '#111',
-  },
-
-  timingLabel: {
-    fontSize: 7,
-    fontWeight: '900',
-    letterSpacing: 1,
-    color: '#888',
-    marginTop: 3,
-  },
-
-  prompterCard: {
-    backgroundColor: '#111',
-    padding: 22,
-    minHeight: 430,
-    marginTop: 12,
-    marginBottom: 12,
-  },
-
-  prompterTop: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-  },
-
-  prompterLabel: {
-    fontSize: 9,
-    fontWeight: '900',
-    letterSpacing: 1.5,
-    color: '#D7FF4F',
-  },
-
-  prompterSection: {
-    fontSize: 10,
-    fontWeight: '800',
-    color: '#777',
-    marginTop: 5,
-  },
-
-  timer: {
-    borderWidth: 1,
-    borderColor: '#333',
-    paddingVertical: 8,
-    paddingHorizontal: 12,
-  },
-
-  timerText: {
-    fontSize: 19,
-    fontWeight: '900',
-    color: '#FFF',
-    letterSpacing: 1,
-  },
-
-  guideLine: {
-    height: 2,
-    backgroundColor: '#D7FF4F',
-    opacity: 0.7,
+  scoreMain: {
+    flexDirection: Platform.OS === 'web' ? 'row' : 'column',
+    alignItems: Platform.OS === 'web' ? 'center' : 'flex-start',
     marginTop: 22,
   },
 
-  scriptWindow: {
-    minHeight: 270,
-    justifyContent: 'center',
-    paddingHorizontal: 15,
-    paddingVertical: 30,
-  },
-
-  promptText: {
-    fontSize: Platform.OS === 'web' ? 31 : 26,
-    lineHeight: Platform.OS === 'web' ? 44 : 37,
-    fontWeight: '700',
+  scoreNumber: {
     color: '#FFF',
-    textAlign: 'center',
-  },
-
-  prompterFooter: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginTop: 18,
-  },
-
-  liveStatus: {
-    fontSize: 8,
+    fontSize: 72,
+    lineHeight: 78,
     fontWeight: '900',
-    letterSpacing: 1.2,
-    color: '#777',
+    letterSpacing: -4,
+    marginRight: 25,
   },
 
-  progressDots: {
+  scoreDetails: {
+    flex: 1,
+    maxWidth: 550,
+  },
+
+  scoreTitle: {
+    color: '#D7FF4F',
+    fontSize: 9,
+    fontWeight: '900',
+    letterSpacing: 1.3,
+  },
+
+  scoreDescription: {
+    color: '#888',
+    fontSize: 11,
+    lineHeight: 17,
+    marginTop: 6,
+  },
+
+  changeRow: {
     flexDirection: 'row',
     alignItems: 'center',
+    marginTop: 12,
   },
 
-  progressDot: {
-    width: 7,
-    height: 7,
-    borderRadius: 4,
-    backgroundColor: '#333',
-    marginLeft: 5,
+  changePill: {
+    backgroundColor: '#292929',
+    paddingHorizontal: 9,
+    paddingVertical: 5,
   },
 
-  progressDotActive: {
-    width: 20,
+  changePillText: {
+    color: '#D7FF4F',
+    fontSize: 9,
+    fontWeight: '900',
+  },
+
+  changeText: {
+    color: '#666',
+    fontSize: 9,
+    marginLeft: 8,
+  },
+
+  scoreTrack: {
+    height: 5,
+    backgroundColor: '#292929',
+    marginTop: 23,
+  },
+
+  scoreFill: {
+    height: '100%',
+    width: '68%',
     backgroundColor: '#D7FF4F',
   },
 
-  progressDotComplete: {
-    backgroundColor: '#777',
+  section: {
+    marginBottom: 28,
   },
 
-  controls: {
+  sectionHeading: {
     flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'flex-end',
     marginBottom: 12,
   },
 
-  resetButton: {
-    height: 54,
-    width: 100,
-    backgroundColor: '#FFF',
-    borderWidth: 1,
-    borderColor: '#DDD',
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginRight: 8,
-  },
-
-  resetText: {
-    fontSize: 9,
+  sectionLabel: {
+    color: '#999',
+    fontSize: 8,
     fontWeight: '900',
-    letterSpacing: 1,
-    color: '#666',
-  },
-
-  startButton: {
-    flex: 1,
-    height: 54,
-    backgroundColor: '#D7FF4F',
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-
-  startText: {
-    fontSize: 10,
-    fontWeight: '900',
-    letterSpacing: 1,
-    color: '#111',
-    marginRight: 14,
-  },
-
-  startArrow: {
-    fontSize: 17,
-    fontWeight: '900',
-    color: '#111',
-  },
-
-  infoCard: {
-    backgroundColor: '#111',
-    padding: 18,
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-
-  infoNumber: {
-    width: 42,
-    height: 42,
-    backgroundColor: '#D7FF4F',
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginRight: 14,
-  },
-
-  infoNumberText: {
-    fontSize: 11,
-    fontWeight: '900',
-    color: '#111',
-  },
-
-  infoContent: {
-    flex: 1,
-  },
-
-  infoTitle: {
-    fontSize: 14,
-    fontWeight: '900',
-    color: '#FFF',
+    letterSpacing: 1.5,
     marginBottom: 4,
   },
 
-  infoText: {
+  sectionTitle: {
+    color: '#111',
+    fontSize: 19,
+    fontWeight: '900',
+    letterSpacing: -0.4,
+  },
+
+  sectionSmall: {
+    color: '#999',
+    fontSize: 7,
+    fontWeight: '900',
+    letterSpacing: 1,
+  },
+
+  skillsGrid: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    marginRight: -8,
+  },
+
+  skillCard: {
+    width: Platform.OS === 'web' ? '50%' : '100%',
+    backgroundColor: '#FFF',
+    borderWidth: 1,
+    borderColor: '#E3E3DE',
+    padding: 18,
+    marginBottom: 8,
+  },
+
+  skillIcon: {
+    width: 32,
+    height: 32,
+    backgroundColor: '#111',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginBottom: 15,
+  },
+
+  skillIconText: {
+    color: '#D7FF4F',
+    fontSize: 11,
+    fontWeight: '900',
+  },
+
+  skillTop: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+
+  skillName: {
+    color: '#111',
+    fontSize: 15,
+    fontWeight: '900',
+  },
+
+  skillScore: {
+    color: '#111',
+    fontSize: 21,
+    fontWeight: '900',
+  },
+
+  skillDescription: {
+    color: '#999',
+    fontSize: 9,
+    marginTop: 3,
+  },
+
+  skillTrack: {
+    height: 5,
+    backgroundColor: '#E8E8E3',
+    marginTop: 15,
+  },
+
+  skillFill: {
+    height: '100%',
+    backgroundColor: '#111',
+  },
+
+  streakCard: {
+    backgroundColor: '#D7FF4F',
+    padding: 21,
+    marginBottom: 30,
+  },
+
+  streakHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+
+  streakLabel: {
+    color: '#555',
+    fontSize: 8,
+    fontWeight: '900',
+    letterSpacing: 1.5,
+  },
+
+  streakTitle: {
+    color: '#111',
+    fontSize: 20,
+    fontWeight: '900',
+    marginTop: 6,
+  },
+
+  streakNumberBox: {
+    alignItems: 'center',
+  },
+
+  streakNumber: {
+    color: '#111',
+    fontSize: 35,
+    lineHeight: 35,
+    fontWeight: '900',
+  },
+
+  streakDays: {
+    color: '#555',
+    fontSize: 7,
+    fontWeight: '900',
+    letterSpacing: 1,
+    marginTop: 2,
+  },
+
+  daysRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginTop: 22,
+    borderTopWidth: 1,
+    borderTopColor: '#BBD83F',
+    paddingTop: 17,
+  },
+
+  day: {
+    alignItems: 'center',
+  },
+
+  dayDone: {
+    width: 32,
+    height: 32,
+    borderRadius: 16,
+    backgroundColor: '#111',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+
+  dayDoneText: {
+    color: '#D7FF4F',
+    fontSize: 11,
+    fontWeight: '900',
+  },
+
+  dayToday: {
+    width: 32,
+    height: 32,
+    borderRadius: 16,
+    backgroundColor: '#FFF',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderWidth: 2,
+    borderColor: '#111',
+  },
+
+  dayTodayText: {
+    color: '#111',
+    fontSize: 10,
+    fontWeight: '900',
+  },
+
+  dayEmpty: {
+    width: 32,
+    height: 32,
+    borderRadius: 16,
+    backgroundColor: '#BFD642',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+
+  dayEmptyText: {
+    color: '#7D9124',
+    fontSize: 10,
+    fontWeight: '900',
+  },
+
+  dayName: {
+    color: '#555',
+    fontSize: 7,
+    fontWeight: '900',
+    marginTop: 6,
+  },
+
+  statGrid: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    marginRight: -8,
+  },
+
+  statCard: {
+    width: Platform.OS === 'web' ? '50%' : '50%',
+    backgroundColor: '#FFF',
+    borderWidth: 1,
+    borderColor: '#E3E3DE',
+    padding: 18,
+    marginBottom: 8,
+  },
+
+  statNumber: {
+    color: '#111',
+    fontSize: 28,
+    fontWeight: '900',
+    letterSpacing: -1,
+  },
+
+  statLabel: {
+    color: '#888',
+    fontSize: 7,
+    fontWeight: '900',
+    letterSpacing: 1,
+    marginTop: 5,
+  },
+
+  statDetail: {
+    color: '#B0B0AA',
+    fontSize: 9,
+    marginTop: 12,
+  },
+
+  milestoneCard: {
+    backgroundColor: '#FFF',
+    borderWidth: 1,
+    borderColor: '#E2E2DE',
+    padding: 21,
+    marginBottom: 12,
+  },
+
+  milestoneTop: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+
+  milestoneTag: {
+    backgroundColor: '#111',
+    paddingHorizontal: 9,
+    paddingVertical: 6,
+  },
+
+  milestoneTagText: {
+    color: '#D7FF4F',
+    fontSize: 7,
+    fontWeight: '900',
+    letterSpacing: 1.1,
+  },
+
+  milestoneNumber: {
+    color: '#111',
+    fontSize: 26,
+    fontWeight: '900',
+  },
+
+  milestoneTitle: {
+    color: '#111',
+    fontSize: 24,
+    fontWeight: '900',
+    letterSpacing: -0.7,
+    marginTop: 25,
+  },
+
+  milestoneText: {
+    color: '#888',
     fontSize: 11,
     lineHeight: 17,
+    maxWidth: 600,
+    marginTop: 7,
+  },
+
+  milestoneTrack: {
+    height: 7,
+    backgroundColor: '#E8E8E3',
+    marginTop: 22,
+  },
+
+  milestoneFill: {
+    height: '100%',
+    width: '91%',
+    backgroundColor: '#111',
+  },
+
+  milestoneBottom: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginTop: 7,
+  },
+
+  milestoneCurrent: {
     color: '#999',
+    fontSize: 7,
+    fontWeight: '900',
+    letterSpacing: 1,
+  },
+
+  milestoneGoal: {
+    color: '#111',
+    fontSize: 7,
+    fontWeight: '900',
+    letterSpacing: 1,
+  },
+
+  milestoneButton: {
+    backgroundColor: '#D7FF4F',
+    minHeight: 49,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingHorizontal: 17,
+    marginTop: 20,
+  },
+
+  milestoneButtonText: {
+    color: '#111',
+    fontSize: 9,
+    fontWeight: '900',
+    letterSpacing: 1,
+  },
+
+  milestoneArrow: {
+    color: '#111',
+    fontSize: 18,
+    fontWeight: '900',
+  },
+
+  quoteCard: {
+    backgroundColor: '#111',
+    padding: 22,
+    marginTop: 20,
+  },
+
+  quoteMark: {
+    width: 35,
+    height: 35,
+    backgroundColor: '#D7FF4F',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+
+  quoteMarkText: {
+    color: '#111',
+    fontSize: 25,
+    lineHeight: 30,
+    fontWeight: '900',
+  },
+
+  quote: {
+    color: '#FFF',
+    fontSize: 20,
+    lineHeight: 28,
+    fontWeight: '800',
+    letterSpacing: -0.4,
+    marginTop: 18,
+    maxWidth: 700,
+  },
+
+  quoteLabel: {
+    color: '#666',
+    fontSize: 7,
+    fontWeight: '900',
+    letterSpacing: 1.2,
+    marginTop: 22,
+  },
+
+  footer: {
+    borderTopWidth: 1,
+    borderTopColor: '#DDD',
+    marginTop: 35,
+    paddingTop: 20,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+
+  footerBrand: {
+    color: '#111',
+    fontSize: 13,
+    fontWeight: '900',
+    letterSpacing: 1.2,
+  },
+
+  footerText: {
+    color: '#999',
+    fontSize: 7,
+    fontWeight: '900',
+    letterSpacing: 1,
   },
 
   bottomSpace: {
-    height: 50,
+    height: 60,
   },
 });
