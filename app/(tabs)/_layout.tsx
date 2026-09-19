@@ -24,7 +24,7 @@ export default function TabLayout() {
       <Tabs.Screen
         name="two"
         options={{
-          title: 'Practice',
+          title: 'Practice Makes Performative',
         }}
       />
     </Tabs>
