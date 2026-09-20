@@ -9,7 +9,8 @@ async function transcribeRuntimeVideo(cloudStorageUrl: string) {
   const transcriptResult = await supadata.transcript({
     url: cloudStorageUrl, 
     text: true,
-    mode: 'generate', // Forces AI Whisper transcription since local files lack captions
+    // Forces AI Whisper transcription since local files lack captions
+    mode: 'generate',
   });
 
   return transcriptResult;
