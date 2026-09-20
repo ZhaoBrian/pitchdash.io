@@ -5,10 +5,17 @@ import {
   Pressable,
   View as RNView,
   ScrollView,
-} 
-from 'react-native';
+} from 'react-native';
 import { useEffect, useRef, useState } from 'react';
 import { Text, View } from '@/components/Themed';
+import { createClient } from '@supabase/supabase-js';
+
+type TranscriptSegment = {
+  text: string;
+  offset: number;
+  duration: number;
+  lang?: string;
+};
 
 type SavedRecording = {
   id: string;
@@ -16,14 +23,24 @@ type SavedRecording = {
   blob: Blob;
   url: string;
   createdAt: string;
+  storagePath?: string;
+  transcript?: string;
+  transcriptSegments?: TranscriptSegment[];
+  transcriptStatus?: 'pending' | 'complete' | 'error';
 };
 
 const DB_NAME = 'PracticeLabDB';
 const STORE_NAME = 'recordings';
+const STORAGE_BUCKET = 'practice-recordings';
+
+const supabase = createClient(
+  process.env.EXPO_PUBLIC_SUPABASE_URL!,
+  process.env.EXPO_PUBLIC_SUPABASE_PUBLISHABLE_KEY!
+);
 
 function openRecordingDatabase(): Promise<IDBDatabase> {
   return new Promise((resolve, reject) => {
-    const request = indexedDB.open(DB_NAME, 1);
+    const request = indexedDB.open(DB_NAME, 2);
 
     request.onupgradeneeded = () => {
       const db = request.result;
@@ -57,6 +74,10 @@ async function saveRecordingToApp(recording: SavedRecording) {
       name: recording.name,
       blob: recording.blob,
       createdAt: recording.createdAt,
+      storagePath: recording.storagePath,
+      transcript: recording.transcript,
+      transcriptSegments: recording.transcriptSegments,
+      transcriptStatus: recording.transcriptStatus,
     });
 
     transaction.oncomplete = () => {
@@ -92,12 +113,20 @@ async function loadRecordingsFromApp(): Promise<SavedRecording[]> {
             name: string;
             blob: Blob;
             createdAt: string;
+            storagePath?: string;
+            transcript?: string;
+            transcriptSegments?: TranscriptSegment[];
+            transcriptStatus?: 'pending' | 'complete' | 'error';
           }) => ({
             id: recording.id,
             name: recording.name,
             blob: recording.blob,
             url: URL.createObjectURL(recording.blob),
             createdAt: recording.createdAt,
+            storagePath: recording.storagePath,
+            transcript: recording.transcript,
+            transcriptSegments: recording.transcriptSegments,
+            transcriptStatus: recording.transcriptStatus,
           })
         );
 
@@ -133,18 +162,82 @@ async function deleteRecordingFromApp(id: string) {
   });
 }
 
+async function uploadRecording(
+  blob: Blob,
+  id: string
+) {
+  const extension =
+    blob.type.includes('mp4')
+      ? 'mp4'
+      : 'webm';
+
+  const path = `recordings/${id}.${extension}`;
+
+  const { error } = await supabase.storage
+    .from(STORAGE_BUCKET)
+    .upload(path, blob, {
+      contentType: blob.type || 'video/webm',
+      upsert: false,
+    });
+
+  if (error) {
+    throw error;
+  }
+
+  return path;
+}
+
+async function transcribeRecording(
+  storagePath: string
+) {
+  const { data, error } =
+    await supabase.functions.invoke(
+      'supadata-transcribe',
+      {
+        body: {
+          storagePath,
+        },
+      }
+    );
+
+  if (error) {
+    throw error;
+  }
+
+  if (!data) {
+    throw new Error('No transcription response received.');
+  }
+
+  return data;
+}
+
 export default function PracticeScreen() {
-  const [permission, requestPermission] = useCameraPermissions();
+  const [permission, requestPermission] =
+    useCameraPermissions();
 
-  const videoRef = useRef<HTMLVideoElement | null>(null);
-  const streamRef = useRef<MediaStream | null>(null);
-  const recorderRef = useRef<MediaRecorder | null>(null);
-  const chunksRef = useRef<Blob[]>([]);
+  const videoRef =
+    useRef<HTMLVideoElement | null>(null);
 
-  const [webReady, setWebReady] = useState(false);
-  const [recording, setRecording] = useState(false);
-  const [savingRecording, setSavingRecording] = useState(false);
-  const [recordings, setRecordings] = useState<SavedRecording[]>([]);
+  const streamRef =
+    useRef<MediaStream | null>(null);
+
+  const recorderRef =
+    useRef<MediaRecorder | null>(null);
+
+  const chunksRef =
+    useRef<Blob[]>([]);
+
+  const [webReady, setWebReady] =
+    useState(false);
+
+  const [recording, setRecording] =
+    useState(false);
+
+  const [savingRecording, setSavingRecording] =
+    useState(false);
+
+  const [recordings, setRecordings] =
+    useState<SavedRecording[]>([]);
 
   useEffect(() => {
     if (Platform.OS !== 'web') {
@@ -155,32 +248,42 @@ export default function PracticeScreen() {
 
     const initialize = async () => {
       try {
-        const savedRecordings = await loadRecordingsFromApp();
+        const savedRecordings =
+          await loadRecordingsFromApp();
 
         if (mounted) {
           setRecordings(savedRecordings);
         }
 
-        const stream = await navigator.mediaDevices.getUserMedia({
-          video: true,
-          audio: true,
-        });
+        const stream =
+          await navigator.mediaDevices.getUserMedia({
+            video: true,
+            audio: true,
+          });
 
         if (!mounted) {
-          stream.getTracks().forEach(track => track.stop());
+          stream
+            .getTracks()
+            .forEach(track => track.stop());
+
           return;
         }
 
         streamRef.current = stream;
 
         if (videoRef.current) {
-          videoRef.current.srcObject = stream;
+          videoRef.current.srcObject =
+            stream;
+
           await videoRef.current.play();
         }
 
         setWebReady(true);
       } catch (error) {
-        console.error('Camera error:', error);
+        console.error(
+          'Camera error:',
+          error
+        );
       }
     };
 
@@ -190,13 +293,18 @@ export default function PracticeScreen() {
       mounted = false;
 
       if (streamRef.current) {
-        streamRef.current.getTracks().forEach(track => track.stop());
+        streamRef.current
+          .getTracks()
+          .forEach(track => track.stop());
       }
     };
   }, []);
 
   const getSupportedMimeType = () => {
-    if (typeof MediaRecorder === 'undefined') {
+    if (
+      typeof MediaRecorder ===
+      'undefined'
+    ) {
       return '';
     }
 
@@ -208,7 +316,11 @@ export default function PracticeScreen() {
     ];
 
     for (const type of types) {
-      if (MediaRecorder.isTypeSupported(type)) {
+      if (
+        MediaRecorder.isTypeSupported(
+          type
+        )
+      ) {
         return type;
       }
     }
@@ -219,38 +331,56 @@ export default function PracticeScreen() {
   const startRecording = () => {
     if (
       !streamRef.current ||
-      typeof MediaRecorder === 'undefined'
+      typeof MediaRecorder ===
+        'undefined'
     ) {
       return;
     }
 
     chunksRef.current = [];
 
-    const mimeType = getSupportedMimeType();
+    const mimeType =
+      getSupportedMimeType();
 
     try {
       const recorder = mimeType
-        ? new MediaRecorder(streamRef.current, {
-            mimeType,
-          })
-        : new MediaRecorder(streamRef.current);
+        ? new MediaRecorder(
+            streamRef.current,
+            {
+              mimeType,
+            }
+          )
+        : new MediaRecorder(
+            streamRef.current
+          );
 
-      recorder.ondataavailable = event => {
-        if (event.data && event.data.size > 0) {
-          chunksRef.current.push(event.data);
-        }
-      };
+      recorder.ondataavailable =
+        event => {
+          if (
+            event.data &&
+            event.data.size > 0
+          ) {
+            chunksRef.current.push(
+              event.data
+            );
+          }
+        };
 
       recorder.onstop = async () => {
         setSavingRecording(true);
 
         try {
-          const blob = new Blob(chunksRef.current, {
-            type: recorder.mimeType || mimeType || 'video/webm',
-          });
+          const blob = new Blob(
+            chunksRef.current,
+            {
+              type:
+                recorder.mimeType ||
+                mimeType ||
+                'video/webm',
+            }
+          );
 
           if (blob.size === 0) {
-            setSavingRecording(false);
             return;
           }
 
@@ -259,25 +389,139 @@ export default function PracticeScreen() {
               .toString(36)
               .substring(2, 9)}`;
 
-          const recording: SavedRecording = {
-            id,
-            name: `Speaking Practice ${new Date().toLocaleTimeString([], {
-              hour: 'numeric',
-              minute: '2-digit',
-            })}`,
-            blob,
-            url: URL.createObjectURL(blob),
-            createdAt: new Date().toISOString(),
-          };
+          const createdAt =
+            new Date().toISOString();
 
-          await saveRecordingToApp(recording);
+          const name =
+            `Speaking Practice ${new Date().toLocaleTimeString(
+              [],
+              {
+                hour: 'numeric',
+                minute: '2-digit',
+              }
+            )}`;
+
+          const recording: SavedRecording =
+            {
+              id,
+              name,
+              blob,
+              url:
+                URL.createObjectURL(
+                  blob
+                ),
+              createdAt,
+              transcriptStatus:
+                'pending',
+            };
 
           setRecordings(previous => [
             recording,
             ...previous,
           ]);
+
+          await saveRecordingToApp(
+            recording
+          );
+
+          const storagePath =
+            await uploadRecording(
+              blob,
+              id
+            );
+
+          const updatedPending: SavedRecording =
+            {
+              ...recording,
+              storagePath,
+            };
+
+          await saveRecordingToApp(
+            updatedPending
+          );
+
+          setRecordings(previous =>
+            previous.map(item =>
+              item.id === id
+                ? updatedPending
+                : item
+            )
+          );
+
+          try {
+            const transcript =
+              await transcribeRecording(
+                storagePath
+              );
+
+            const transcriptSegments =
+              Array.isArray(
+                transcript.content
+              )
+                ? transcript.content
+                : [];
+
+            const transcriptText =
+              transcriptSegments
+                .map(
+                  (
+                    segment: TranscriptSegment
+                  ) => segment.text
+                )
+                .join(' ')
+                .trim();
+
+            const completedRecording:
+              SavedRecording = {
+                ...updatedPending,
+                transcript:
+                  transcriptText,
+                transcriptSegments,
+                transcriptStatus:
+                  'complete',
+              };
+
+            await saveRecordingToApp(
+              completedRecording
+            );
+
+            setRecordings(previous =>
+              previous.map(item =>
+                item.id === id
+                  ? completedRecording
+                  : item
+              )
+            );
+          } catch (transcriptionError) {
+            console.error(
+              'Transcription error:',
+              transcriptionError
+            );
+
+            const failedRecording:
+              SavedRecording = {
+                ...updatedPending,
+                transcriptStatus:
+                  'error',
+              };
+
+            await saveRecordingToApp(
+              failedRecording
+            );
+
+            setRecordings(previous =>
+              previous.map(item =>
+                item.id === id
+                  ? failedRecording
+                  : item
+              )
+            );
+          }
         } catch (error) {
-          console.error('Could not save recording:', error);
+          console.error(
+            'Could not save recording:',
+            error
+          );
         } finally {
           chunksRef.current = [];
           setSavingRecording(false);
@@ -285,7 +529,11 @@ export default function PracticeScreen() {
       };
 
       recorder.onerror = event => {
-        console.error('Recording error:', event);
+        console.error(
+          'Recording error:',
+          event
+        );
+
         setRecording(false);
       };
 
@@ -295,7 +543,10 @@ export default function PracticeScreen() {
 
       setRecording(true);
     } catch (error) {
-      console.error('Could not start recording:', error);
+      console.error(
+        'Could not start recording:',
+        error
+      );
     }
   };
 
@@ -304,7 +555,10 @@ export default function PracticeScreen() {
       return;
     }
 
-    if (recorderRef.current.state !== 'inactive') {
+    if (
+      recorderRef.current.state !==
+      'inactive'
+    ) {
       recorderRef.current.stop();
     }
 
@@ -312,17 +566,37 @@ export default function PracticeScreen() {
     setRecording(false);
   };
 
-  const deleteRecording = async (recording: SavedRecording) => {
+  const deleteRecording = async (
+    recording: SavedRecording
+  ) => {
     try {
-      await deleteRecordingFromApp(recording.id);
+      await deleteRecordingFromApp(
+        recording.id
+      );
 
-      URL.revokeObjectURL(recording.url);
+      if (recording.storagePath) {
+        await supabase.storage
+          .from(STORAGE_BUCKET)
+          .remove([
+            recording.storagePath,
+          ]);
+      }
+
+      URL.revokeObjectURL(
+        recording.url
+      );
 
       setRecordings(previous =>
-        previous.filter(item => item.id !== recording.id)
+        previous.filter(
+          item =>
+            item.id !== recording.id
+        )
       );
     } catch (error) {
-      console.error('Could not delete recording:', error);
+      console.error(
+        'Could not delete recording:',
+        error
+      );
     }
   };
 
@@ -349,12 +623,16 @@ export default function PracticeScreen() {
           </Text>
 
           <Text style={styles.description}>
-            Allow camera access to practice your speaking and eye contact mannerisms.
+            Allow camera access to
+            practice your speaking and
+            eye contact mannerisms.
           </Text>
 
           <Pressable
             style={styles.button}
-            onPress={requestPermission}
+            onPress={
+              requestPermission
+            }
           >
             <Text style={styles.buttonText}>
               ALLOW CAMERA
@@ -367,7 +645,9 @@ export default function PracticeScreen() {
     return (
       <ScrollView
         style={styles.page}
-        contentContainerStyle={styles.pageContent}
+        contentContainerStyle={
+          styles.pageContent
+        }
       >
         <View style={styles.header}>
           <Text style={styles.eyebrow}>
@@ -379,7 +659,11 @@ export default function PracticeScreen() {
           </Text>
         </View>
 
-        <View style={styles.cameraContainer}>
+        <View
+          style={
+            styles.cameraContainer
+          }
+        >
           <CameraView
             style={styles.camera}
             facing="front"
@@ -387,10 +671,26 @@ export default function PracticeScreen() {
 
           <View style={styles.overlay}>
             <View style={styles.target}>
-              <View style={styles.cornerTopLeft} />
-              <View style={styles.cornerTopRight} />
-              <View style={styles.cornerBottomLeft} />
-              <View style={styles.cornerBottomRight} />
+              <View
+                style={
+                  styles.cornerTopLeft
+                }
+              />
+              <View
+                style={
+                  styles.cornerTopRight
+                }
+              />
+              <View
+                style={
+                  styles.cornerBottomLeft
+                }
+              />
+              <View
+                style={
+                  styles.cornerBottomRight
+                }
+              />
             </View>
           </View>
         </View>
@@ -404,8 +704,14 @@ export default function PracticeScreen() {
             Tell a story.
           </Text>
 
-          <Text style={styles.infoDescription}>
-            Look directly into the camera and tell a short story with a clear
+          <Text
+            style={
+              styles.infoDescription
+            }
+          >
+            Look directly into the
+            camera and tell a short
+            story with a clear
             beginning, middle, and end.
           </Text>
         </View>
@@ -416,8 +722,12 @@ export default function PracticeScreen() {
   return (
     <ScrollView
       style={styles.page}
-      contentContainerStyle={styles.pageContent}
-      showsVerticalScrollIndicator={false}
+      contentContainerStyle={
+        styles.pageContent
+      }
+      showsVerticalScrollIndicator={
+        false
+      }
     >
       <View style={styles.header}>
         <Text style={styles.eyebrow}>
@@ -429,7 +739,9 @@ export default function PracticeScreen() {
         </Text>
       </View>
 
-      <RNView style={styles.cameraContainer}>
+      <RNView
+        style={styles.cameraContainer}
+      >
         <video
           ref={videoRef}
           autoPlay
@@ -439,7 +751,11 @@ export default function PracticeScreen() {
         />
 
         {!webReady && (
-          <RNView style={styles.cameraLoading}>
+          <RNView
+            style={
+              styles.cameraLoading
+            }
+          >
             <Text style={styles.loading}>
               Starting camera...
             </Text>
@@ -447,20 +763,42 @@ export default function PracticeScreen() {
         )}
 
         <RNView style={styles.overlay}>
-
           <RNView style={styles.target}>
-            <RNView style={styles.cornerTopLeft} />
-            <RNView style={styles.cornerTopRight} />
-            <RNView style={styles.cornerBottomLeft} />
-            <RNView style={styles.cornerBottomRight} />
+            <RNView
+              style={
+                styles.cornerTopLeft
+              }
+            />
+            <RNView
+              style={
+                styles.cornerTopRight
+              }
+            />
+            <RNView
+              style={
+                styles.cornerBottomLeft
+              }
+            />
+            <RNView
+              style={
+                styles.cornerBottomRight
+              }
+            />
           </RNView>
 
-          <RNView style={styles.cameraLabel}>
-            <Text style={styles.cameraLabelText}>
-              {recording ? '● RECORDING' : 'EYE CONTACT'}
+          <RNView
+            style={styles.cameraLabel}
+          >
+            <Text
+              style={
+                styles.cameraLabelText
+              }
+            >
+              {recording
+                ? '● RECORDING'
+                : 'EYE CONTACT'}
             </Text>
           </RNView>
-
         </RNView>
       </RNView>
 
@@ -473,15 +811,20 @@ export default function PracticeScreen() {
           Tell a story.
         </Text>
 
-        <Text style={styles.infoDescription}>
-          Look directly into the camera and tell a short story with a clear
-          beginning, middle, and end.
+        <Text
+          style={styles.infoDescription}
+        >
+          Look directly into the camera
+          and tell a short story with a
+          clear beginning, middle, and
+          end.
         </Text>
 
         <Pressable
           style={[
             styles.recordButton,
-            recording && styles.stopButton,
+            recording &&
+              styles.stopButton,
           ]}
           onPress={
             recording
@@ -493,18 +836,20 @@ export default function PracticeScreen() {
           <View
             style={[
               styles.recordDot,
-              recording && styles.stopDot,
+              recording &&
+                styles.stopDot,
             ]}
           />
 
           <Text
             style={[
               styles.recordText,
-              recording && styles.stopRecordText,
+              recording &&
+                styles.stopRecordText,
             ]}
           >
             {savingRecording
-              ? 'SAVING...'
+              ? 'PROCESSING...'
               : recording
                 ? 'STOP RECORDING'
                 : 'START RECORDING'}
@@ -513,80 +858,218 @@ export default function PracticeScreen() {
       </View>
 
       {recordings.length > 0 && (
-        <View style={styles.recordingsSection}>
-          <Text style={styles.recordingsEyebrow}>
+        <View
+          style={styles.recordingsSection}
+        >
+          <Text
+            style={
+              styles.recordingsEyebrow
+            }
+          >
             PRACTICE HISTORY
           </Text>
 
-          <Text style={styles.recordingsTitle}>
+          <Text
+            style={
+              styles.recordingsTitle
+            }
+          >
             Your recordings
           </Text>
 
-          {recordings.map((recording, index) => (
-            <View
-              key={recording.id}
-              style={styles.recordingCard}
-            >
-              <RNView style={styles.recordingVideoContainer}>
-                <video
-                  src={recording.url}
-                  controls
-                  playsInline
-                  preload="metadata"
-                  style={styles.recordingVideo}
-                />
-              </RNView>
+          {recordings.map(
+            (recording, index) => (
+              <View
+                key={recording.id}
+                style={
+                  styles.recordingCard
+                }
+              >
+                <RNView
+                  style={
+                    styles.recordingVideoContainer
+                  }
+                >
+                  <video
+                    src={recording.url}
+                    controls
+                    playsInline
+                    preload="metadata"
+                    style={
+                      styles.recordingVideo
+                    }
+                  />
+                </RNView>
 
-              <View style={styles.recordingDetails}>
-                <View style={styles.recordingHeader}>
-                  <View style={styles.recordingNameContainer}>
-                    <Text style={styles.recordingNumber}>
-                      REP {recordings.length - index}
-                    </Text>
-
-                    <Text style={styles.recordingName}>
-                      {recording.name}
-                    </Text>
-                  </View>
-
-                  <Pressable
-                    style={styles.deleteButton}
-                    onPress={() =>
-                      deleteRecording(recording)
+                {recording
+                  .transcriptStatus ===
+                  'pending' && (
+                  <View
+                    style={
+                      styles.transcriptLoading
                     }
                   >
-                    <Text style={styles.deleteButtonText}>
-                      DELETE
+                    <Text
+                      style={
+                        styles.transcriptLoadingText
+                      }
+                    >
+                      TRANSCRIBING YOUR REP...
                     </Text>
-                  </Pressable>
+                  </View>
+                )}
+
+                {recording
+                  .transcriptStatus ===
+                  'complete' &&
+                  recording.transcript && (
+                    <View
+                      style={
+                        styles.transcriptSection
+                      }
+                    >
+                      <Text
+                        style={
+                          styles.transcriptEyebrow
+                        }
+                      >
+                        TRANSCRIPT
+                      </Text>
+
+                      <Text
+                        style={
+                          styles.transcriptText
+                        }
+                      >
+                        {recording.transcript}
+                      </Text>
+                    </View>
+                  )}
+
+                {recording
+                  .transcriptStatus ===
+                  'error' && (
+                  <View
+                    style={
+                      styles.transcriptSection
+                    }
+                  >
+                    <Text
+                      style={
+                        styles.transcriptEyebrow
+                      }
+                    >
+                      TRANSCRIPT
+                    </Text>
+
+                    <Text
+                      style={
+                        styles.transcriptError
+                      }
+                    >
+                      We couldn't generate a
+                      transcript for this rep.
+                    </Text>
+                  </View>
+                )}
+
+                <View
+                  style={
+                    styles.recordingDetails
+                  }
+                >
+                  <View
+                    style={
+                      styles.recordingHeader
+                    }
+                  >
+                    <View
+                      style={
+                        styles.recordingNameContainer
+                      }
+                    >
+                      <Text
+                        style={
+                          styles.recordingNumber
+                        }
+                      >
+                        REP{' '}
+                        {recordings.length -
+                          index}
+                      </Text>
+
+                      <Text
+                        style={
+                          styles.recordingName
+                        }
+                      >
+                        {recording.name}
+                      </Text>
+                    </View>
+
+                    <Pressable
+                      style={
+                        styles.deleteButton
+                      }
+                      onPress={() =>
+                        deleteRecording(
+                          recording
+                        )
+                      }
+                    >
+                      <Text
+                        style={
+                          styles.deleteButtonText
+                        }
+                      >
+                        DELETE
+                      </Text>
+                    </Pressable>
+                  </View>
+
+                  <Text
+                    style={
+                      styles.recordingDate
+                    }
+                  >
+                    {new Date(
+                      recording.createdAt
+                    ).toLocaleString()}
+                  </Text>
+
+                  <Text
+                    style={
+                      styles.storedLabel
+                    }
+                  >
+                    STORED IN PRACTICE LAB
+                  </Text>
                 </View>
-
-                <Text style={styles.recordingDate}>
-                  {new Date(
-                    recording.createdAt
-                  ).toLocaleString()}
-                </Text>
-
-                <Text style={styles.storedLabel}>
-                  STORED IN PRACTICE LAB
-                </Text>
               </View>
-            </View>
-          ))}
+            )
+          )}
         </View>
       )}
 
-      {recordings.length === 0 && !recording && (
-        <View style={styles.emptyState}>
-          <Text style={styles.emptyEyebrow}>
-            NO REPS YET
-          </Text>
+      {recordings.length === 0 &&
+        !recording && (
+          <View
+            style={styles.emptyState}
+          >
+            <Text
+              style={styles.emptyEyebrow}
+            >
+              NO REPS YET
+            </Text>
 
-          <Text style={styles.emptyTitle}>
-            Your practice recordings will appear here.
-          </Text>
-        </View>
-      )}
+            <Text
+              style={styles.emptyTitle}
+            >
+              Your practice recordings
+              will appear here.
+            </Text>
+          </View>
+        )}
     </ScrollView>
   );
 }
@@ -843,6 +1326,49 @@ const styles = StyleSheet.create({
     height: '100%',
     objectFit: 'contain',
   } as any,
+
+  transcriptLoading: {
+    paddingHorizontal: 14,
+    paddingVertical: 13,
+    backgroundColor: '#F7F7F5',
+    borderTopWidth: 1,
+    borderTopColor: '#E7E7E3',
+  },
+
+  transcriptLoadingText: {
+    fontSize: 9,
+    fontWeight: '900',
+    letterSpacing: 1.2,
+    color: '#888',
+  },
+
+  transcriptSection: {
+    paddingHorizontal: 14,
+    paddingTop: 15,
+    paddingBottom: 16,
+    borderTopWidth: 1,
+    borderTopColor: '#E7E7E3',
+  },
+
+  transcriptEyebrow: {
+    fontSize: 9,
+    fontWeight: '900',
+    letterSpacing: 1.4,
+    color: '#888',
+    marginBottom: 8,
+  },
+
+  transcriptText: {
+    fontSize: 13,
+    lineHeight: 20,
+    color: '#333',
+  },
+
+  transcriptError: {
+    fontSize: 12,
+    lineHeight: 18,
+    color: '#999',
+  },
 
   recordingDetails: {
     padding: 14,
