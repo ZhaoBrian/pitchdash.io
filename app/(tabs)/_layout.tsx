@@ -109,6 +109,35 @@ export default function TabLayout() {
           ),
         }}
       />
+
+      <Tabs.Screen
+        name="three"
+        options={{
+          title: 'Infer Mason',
+          tabBarIcon: ({ focused }) => (
+            <View
+              style={{
+                width: 27,
+                height: 27,
+                alignItems: 'center',
+                justifyContent: 'center',
+                backgroundColor: focused ? '#D7FF4F' : '#EEEEEE',
+                borderRadius: 8,
+              }}
+            >
+              <Text
+                style={{
+                  color: '#111111',
+                  fontSize: 15,
+                  fontWeight: '900',
+                }}
+              >
+                🖥️
+              </Text>
+            </View>
+          ),
+        }}
+      />
     </Tabs>
   );
 }
