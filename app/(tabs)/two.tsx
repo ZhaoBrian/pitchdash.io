@@ -5,7 +5,8 @@ import {
   Pressable,
   View as RNView,
   ScrollView,
-} from 'react-native';
+} 
+from 'react-native';
 import { useEffect, useRef, useState } from 'react';
 import { Text, View } from '@/components/Themed';
 import { createClient } from '@supabase/supabase-js';
@@ -205,7 +206,9 @@ async function transcribeRecording(
   }
 
   if (!data) {
-    throw new Error('No transcription response received.');
+    throw new Error(
+      'No transcription response received.'
+    );
   }
 
   return data;
@@ -246,60 +249,252 @@ export default function PracticeScreen() {
 
     let mounted = true;
 
-    const initialize = async () => {
+    const attachStream = async (
+      stream: MediaStream
+    ) => {
+      if (
+        !mounted ||
+        !videoRef.current
+      ) {
+        return;
+      }
+
+      const video =
+        videoRef.current;
+
+      video.srcObject = null;
+      video.srcObject = stream;
+      video.muted = true;
+      video.autoplay = true;
+      video.playsInline = true;
+
       try {
-        const savedRecordings =
-          await loadRecordingsFromApp();
+        await video.play();
 
         if (mounted) {
-          setRecordings(savedRecordings);
+          setWebReady(true);
+        }
+      } catch (error) {
+        console.error(
+          'Could not start video preview:',
+          error
+        );
+
+        setTimeout(async () => {
+          if (
+            !mounted ||
+            !videoRef.current
+          ) {
+            return;
+          }
+
+          try {
+            await videoRef.current.play();
+
+            if (mounted) {
+              setWebReady(true);
+            }
+          } catch (retryError) {
+            console.error(
+              'Could not start video preview after retry:',
+              retryError
+            );
+          }
+        }, 500);
+      }
+    };
+
+    const startCamera = async () => {
+      try {
+        setWebReady(false);
+
+        if (
+          !navigator.mediaDevices ||
+          !navigator.mediaDevices.getUserMedia
+        ) {
+          throw new Error(
+            'Camera access is not supported by this browser.'
+          );
+        }
+
+        if (
+          streamRef.current &&
+          streamRef.current
+            .getVideoTracks()
+            .some(
+              track =>
+                track.readyState === 'live'
+            )
+        ) {
+          await attachStream(
+            streamRef.current
+          );
+
+          return;
+        }
+
+        if (streamRef.current) {
+          streamRef.current
+            .getTracks()
+            .forEach(track =>
+              track.stop()
+            );
+
+          streamRef.current = null;
         }
 
         const stream =
-          await navigator.mediaDevices.getUserMedia({
-            video: true,
-            audio: true,
-          });
+          await navigator.mediaDevices.getUserMedia(
+            {
+              video: {
+                facingMode: 'user',
+                width: {
+                  ideal: 1280,
+                },
+                height: {
+                  ideal: 720,
+                },
+              },
+              audio: true,
+            }
+          );
 
         if (!mounted) {
           stream
             .getTracks()
-            .forEach(track => track.stop());
+            .forEach(track =>
+              track.stop()
+            );
 
           return;
         }
 
         streamRef.current = stream;
 
-        if (videoRef.current) {
-          videoRef.current.srcObject =
-            stream;
+        stream
+          .getVideoTracks()
+          .forEach(track => {
+            track.onended = () => {
+              if (mounted) {
+                setWebReady(false);
+              }
+            };
+          });
 
-          await videoRef.current.play();
+        await attachStream(stream);
+      } catch (error) {
+        console.error(
+          'Camera error:',
+          error
+        );
+
+        if (mounted) {
+          setWebReady(false);
+
+          alert(
+            error instanceof Error
+              ? error.message
+              : String(error)
+          );
+        }
+      }
+    };
+
+    const reconnectCamera = () => {
+      if (!mounted) {
+        return;
+      }
+
+      setTimeout(() => {
+        if (mounted) {
+          startCamera();
+        }
+      }, 150);
+    };
+
+    const handleVisibilityChange = () => {
+      if (
+        document.visibilityState ===
+        'visible'
+      ) {
+        reconnectCamera();
+      }
+    };
+
+    const handleFocus = () => {
+      reconnectCamera();
+    };
+
+    const initialize = async () => {
+      try {
+        const savedRecordings =
+          await loadRecordingsFromApp();
+
+        if (mounted) {
+          setRecordings(
+            savedRecordings
+          );
         }
 
-        setWebReady(true);
+        await startCamera();
       } catch (error) {
-        console.error('Camera error:', error);
-      
-        alert(
-          error instanceof Error
-            ? error.message
-            : String(error)
+        console.error(
+          'Camera initialization error:',
+          error
         );
       }
     };
 
     initialize();
 
+    document.addEventListener(
+      'visibilitychange',
+      handleVisibilityChange
+    );
+
+    window.addEventListener(
+      'focus',
+      handleFocus
+    );
+
     return () => {
       mounted = false;
+
+      document.removeEventListener(
+        'visibilitychange',
+        handleVisibilityChange
+      );
+
+      window.removeEventListener(
+        'focus',
+        handleFocus
+      );
+
+      if (
+        recorderRef.current &&
+        recorderRef.current.state !==
+          'inactive'
+      ) {
+        recorderRef.current.stop();
+      }
 
       if (streamRef.current) {
         streamRef.current
           .getTracks()
-          .forEach(track => track.stop());
+          .forEach(track => {
+            track.onended = null;
+            track.stop();
+          });
+
+        streamRef.current = null;
       }
+
+      if (videoRef.current) {
+        videoRef.current.srcObject =
+          null;
+      }
+
+      setWebReady(false);
     };
   }, []);
 
@@ -404,8 +599,8 @@ export default function PracticeScreen() {
               }
             )}`;
 
-          const recording: SavedRecording =
-            {
+          const recording:
+            SavedRecording = {
               id,
               name,
               blob,
@@ -433,8 +628,8 @@ export default function PracticeScreen() {
               id
             );
 
-          const updatedPending: SavedRecording =
-            {
+          const updatedPending:
+            SavedRecording = {
               ...recording,
               storagePath,
             };
@@ -469,20 +664,21 @@ export default function PracticeScreen() {
                 .map(
                   (
                     segment: TranscriptSegment
-                  ) => segment.text
+                  ) =>
+                    segment.text
                 )
                 .join(' ')
                 .trim();
 
             const completedRecording:
               SavedRecording = {
-                ...updatedPending,
-                transcript:
-                  transcriptText,
-                transcriptSegments,
-                transcriptStatus:
-                  'complete',
-              };
+              ...updatedPending,
+              transcript:
+                transcriptText,
+              transcriptSegments,
+              transcriptStatus:
+                'complete',
+            };
 
             await saveRecordingToApp(
               completedRecording
@@ -495,7 +691,9 @@ export default function PracticeScreen() {
                   : item
               )
             );
-          } catch (transcriptionError) {
+          } catch (
+            transcriptionError
+          ) {
             console.error(
               'Transcription error:',
               transcriptionError
@@ -503,10 +701,10 @@ export default function PracticeScreen() {
 
             const failedRecording:
               SavedRecording = {
-                ...updatedPending,
-                transcriptStatus:
-                  'error',
-              };
+              ...updatedPending,
+              transcriptStatus:
+                'error',
+            };
 
             await saveRecordingToApp(
               failedRecording
@@ -540,7 +738,8 @@ export default function PracticeScreen() {
         setRecording(false);
       };
 
-      recorderRef.current = recorder;
+      recorderRef.current =
+        recorder;
 
       recorder.start(250);
 
@@ -554,7 +753,9 @@ export default function PracticeScreen() {
   };
 
   const stopRecording = () => {
-    if (!recorderRef.current) {
+    if (
+      !recorderRef.current
+    ) {
       return;
     }
 
@@ -577,7 +778,9 @@ export default function PracticeScreen() {
         recording.id
       );
 
-      if (recording.storagePath) {
+      if (
+        recording.storagePath
+      ) {
         await supabase.storage
           .from(STORAGE_BUCKET)
           .remove([
@@ -592,7 +795,8 @@ export default function PracticeScreen() {
       setRecordings(previous =>
         previous.filter(
           item =>
-            item.id !== recording.id
+            item.id !==
+            recording.id
         )
       );
     } catch (error) {
@@ -625,7 +829,11 @@ export default function PracticeScreen() {
             Camera access needed
           </Text>
 
-          <Text style={styles.description}>
+          <Text
+            style={
+              styles.description
+            }
+          >
             Allow camera access to
             practice your speaking and
             eye contact mannerisms.
@@ -637,7 +845,11 @@ export default function PracticeScreen() {
               requestPermission
             }
           >
-            <Text style={styles.buttonText}>
+            <Text
+              style={
+                styles.buttonText
+              }
+            >
               ALLOW CAMERA
             </Text>
           </Pressable>
@@ -679,16 +891,19 @@ export default function PracticeScreen() {
                   styles.cornerTopLeft
                 }
               />
+
               <View
                 style={
                   styles.cornerTopRight
                 }
               />
+
               <View
                 style={
                   styles.cornerBottomLeft
                 }
               />
+
               <View
                 style={
                   styles.cornerBottomRight
@@ -699,11 +914,19 @@ export default function PracticeScreen() {
         </View>
 
         <View style={styles.info}>
-          <Text style={styles.infoEyebrow}>
+          <Text
+            style={
+              styles.infoEyebrow
+            }
+          >
             60 SECOND REP
           </Text>
 
-          <Text style={styles.infoTitle}>
+          <Text
+            style={
+              styles.infoTitle
+            }
+          >
             Tell a story.
           </Text>
 
@@ -750,6 +973,17 @@ export default function PracticeScreen() {
           autoPlay
           playsInline
           muted
+          onLoadedMetadata={async event => {
+            try {
+              await event.currentTarget.play();
+              setWebReady(true);
+            } catch (error) {
+              console.error(
+                'Video playback failed:',
+                error
+              );
+            }
+          }}
           style={styles.webVideo}
         />
 
@@ -762,6 +996,23 @@ export default function PracticeScreen() {
             <Text style={styles.loading}>
               Starting camera...
             </Text>
+
+            <Pressable
+              style={
+                styles.cameraRetryButton
+              }
+              onPress={() => {
+                window.location.reload();
+              }}
+            >
+              <Text
+                style={
+                  styles.cameraRetryText
+                }
+              >
+                RECONNECT CAMERA
+              </Text>
+            </Pressable>
           </RNView>
         )}
 
@@ -772,16 +1023,19 @@ export default function PracticeScreen() {
                 styles.cornerTopLeft
               }
             />
+
             <RNView
               style={
                 styles.cornerTopRight
               }
             />
+
             <RNView
               style={
                 styles.cornerBottomLeft
               }
             />
+
             <RNView
               style={
                 styles.cornerBottomRight
@@ -815,7 +1069,9 @@ export default function PracticeScreen() {
         </Text>
 
         <Text
-          style={styles.infoDescription}
+          style={
+            styles.infoDescription
+          }
         >
           Look directly into the camera
           and tell a short story with a
@@ -862,7 +1118,9 @@ export default function PracticeScreen() {
 
       {recordings.length > 0 && (
         <View
-          style={styles.recordingsSection}
+          style={
+            styles.recordingsSection
+          }
         >
           <Text
             style={
@@ -1150,6 +1408,20 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: '#111',
+  },
+
+  cameraRetryButton: {
+    marginTop: 14,
+    paddingHorizontal: 16,
+    paddingVertical: 10,
+    backgroundColor: '#D7FF4F',
+  },
+
+  cameraRetryText: {
+    color: '#111',
+    fontSize: 9,
+    fontWeight: '900',
+    letterSpacing: 1.1,
   },
 
   overlay: {

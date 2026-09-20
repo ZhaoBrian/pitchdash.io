@@ -132,7 +132,7 @@ export default function TabLayout() {
                   fontWeight: '900',
                 }}
               >
-                🖥️
+                📈
               </Text>
             </View>
           ),
