@@ -8,6 +8,7 @@ import {
 } from 'react-native';
 import { useEffect, useRef, useState } from 'react';
 import { Text, View } from '@/components/Themed';
+import { createClient } from '@supabase/supabase-js';
 
 type TranscriptSegment = {
   text: string;

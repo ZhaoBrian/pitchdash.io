@@ -3,6 +3,7 @@
   "main": "expo-router/entry",
   "version": "1.0.0",
   "dependencies": {
+    "@supabase/supabase-js": "^2.116.0",
     "@supadata/js": "^1.4.0",
     "expo": "~57.0.24",
     "expo-camera": "~57.0.5",
