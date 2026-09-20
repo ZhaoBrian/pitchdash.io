@@ -5,7 +5,6 @@ const supadata = new Supadata({
 });
 
 async function transcribeRuntimeVideo(cloudStorageUrl: string) {
-  // Pass the direct mp4/webm link generated from your storage bucket
   const transcriptResult = await supadata.transcript({
     url: cloudStorageUrl, 
     text: true,
