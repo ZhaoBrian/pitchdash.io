@@ -280,9 +280,12 @@ export default function PracticeScreen() {
 
         setWebReady(true);
       } catch (error) {
-        console.error(
-          'Camera error:',
-          error
+        console.error('Camera error:', error);
+      
+        alert(
+          error instanceof Error
+            ? error.message
+            : String(error)
         );
       }
     };
