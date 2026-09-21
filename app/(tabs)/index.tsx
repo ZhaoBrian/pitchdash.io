@@ -283,7 +283,7 @@ export default function ModalScreen() {
         <View style={styles.footer}>
           <Text style={styles.footerBrand}>PitchDash.io</Text>
           <Text style={styles.footerText}>
-            PRACTICE UNTIL SPEAKING FEELS NATURAL.
+            OPEN UP AND COME OUT OF YOUR SHELL.
           </Text>
         </View>
 
